@@ -1,0 +1,247 @@
+/* Scale specimen ------------------------------------------------------- */
+
+.scale {
+  border-top: 1px solid var(--lab-rule-strong);
+  /* The scope root receives the system's body style; reset the chrome bits explicitly. */
+  color: var(--lab-ink);
+}
+
+.scaleRow {
+  display: grid;
+  grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
+  gap: var(--lab-space-6);
+  padding-block: var(--lab-space-5);
+  border-bottom: 1px solid var(--lab-rule);
+}
+
+.scaleMeta {
+  display: grid;
+  gap: var(--lab-space-1);
+  align-content: start;
+  margin: 0;
+  max-width: none;
+  font-family: var(--lab-sans);
+  font-size: var(--lab-text-xs);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0;
+  line-height: 1.45;
+  text-transform: none;
+  color: var(--lab-ink-2);
+}
+
+.scaleMeta > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+}
+
+.scaleMeta dt {
+  color: var(--lab-ink-3);
+}
+
+.scaleMeta dt::after {
+  content: ":";
+}
+
+.scaleMeta code,
+.scaleClamp {
+  font-family: var(--lab-mono);
+  font-size: 0.6875rem;
+}
+
+.scaleName {
+  font-size: var(--lab-text-sm);
+  font-weight: 600;
+  color: var(--lab-ink);
+}
+
+.scaleClamp {
+  margin-top: var(--lab-space-1);
+  padding: 0.25rem 0.4rem;
+  background: var(--lab-paper-sunken);
+  overflow-wrap: anywhere;
+}
+
+.scaleSample {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 48rem) {
+  .scaleRow {
+    grid-template-columns: 1fr;
+    gap: var(--lab-space-3);
+  }
+}
+
+/* Font roles ----------------------------------------------------------- */
+
+.roles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  border-top: 1px solid var(--lab-rule-strong);
+}
+
+.role {
+  display: grid;
+  gap: var(--lab-space-2);
+  align-content: start;
+  padding: var(--lab-space-4) var(--lab-space-4) var(--lab-space-5) 0;
+  border-bottom: 1px solid var(--lab-rule);
+}
+
+.roleTitle {
+  font-family: var(--lab-mono);
+  font-size: var(--lab-text-xs);
+  color: var(--lab-accent);
+}
+
+.roleGlyphs {
+  display: flex;
+  gap: 0.35em;
+  font-family: var(--specimen-family);
+  font-weight: var(--specimen-weight);
+  font-size: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+  line-height: 1;
+}
+
+.roleFamily {
+  font-size: var(--lab-text-lg);
+  font-weight: 500;
+}
+
+.roleFamily a {
+  text-decoration: none;
+}
+
+.roleFamily a:hover {
+  text-decoration: underline;
+}
+
+.roleFacts {
+  display: grid;
+  gap: 0.15rem;
+  font-size: var(--lab-text-xs);
+}
+
+.roleFacts > div {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: var(--lab-space-2);
+}
+
+.roleFacts dt {
+  font-family: var(--lab-mono);
+  color: var(--lab-ink-3);
+}
+
+/* Audit ---------------------------------------------------------------- */
+
+.audit {
+  display: grid;
+  gap: var(--lab-space-3);
+}
+
+.auditItem {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  gap: var(--lab-space-2);
+  font-size: var(--lab-text-sm);
+}
+
+.auditMark {
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  background: var(--lab-positive);
+  color: var(--lab-paper);
+}
+
+.auditItem[data-pass="false"] .auditMark {
+  background: var(--lab-negative);
+}
+
+.auditDetail {
+  display: block;
+  color: var(--lab-ink-2);
+}
+
+/* Export panel --------------------------------------------------------- */
+
+.exportPanel {
+  border: 1px solid var(--lab-rule-strong);
+  background: var(--lab-paper-raised);
+}
+
+.tabs {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--lab-rule-strong);
+}
+
+.tab {
+  padding: 0.65rem 1rem;
+  background: transparent;
+  border: 0;
+  border-right: 1px solid var(--lab-rule);
+  font-family: var(--lab-mono);
+  font-size: var(--lab-text-xs);
+  white-space: nowrap;
+  color: var(--lab-ink-2);
+}
+
+.tab[aria-selected="true"] {
+  background: var(--lab-ink);
+  color: var(--lab-paper);
+}
+
+.tab:focus-visible {
+  outline-offset: -3px;
+}
+
+.tabPanel {
+  display: grid;
+}
+
+.fileBar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--lab-space-3);
+  padding: var(--lab-space-3) var(--lab-space-4);
+  border-bottom: 1px solid var(--lab-rule);
+}
+
+.fileInfo {
+  font-size: var(--lab-text-sm);
+  color: var(--lab-ink-2);
+  max-width: 70ch;
+}
+
+.fileInfo code {
+  font-family: var(--lab-mono);
+  color: var(--lab-ink);
+}
+
+.fileActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lab-space-2);
+}
+
+.code {
+  margin: 0;
+  max-height: 34rem;
+  overflow: auto;
+  padding: var(--lab-space-4);
+  font-family: var(--lab-mono);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  tab-size: 2;
+  white-space: pre;
+}

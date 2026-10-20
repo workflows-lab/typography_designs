@@ -1,0 +1,312 @@
+/*
+ * Layout for preview compositions. No font properties here: typography comes
+ * exclusively from the system's generated CSS. Spacing uses container units so the
+ * page responds to the preview frame width, not the browser window.
+ */
+
+.site {
+  --pad: clamp(20px, 5cqi, 80px);
+  --gap: clamp(28px, 6cqi, 112px);
+  background: var(--c-paper);
+  color: var(--c-ink);
+  min-height: 100%;
+}
+
+.site :where(h1, h2, h3, h4, h5, h6, p, blockquote, figcaption) {
+  color: inherit;
+}
+
+/* Header --------------------------------------------------------------- */
+
+.siteHeader {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px 24px;
+  padding: 18px var(--pad);
+  border-bottom: 1px solid var(--c-rule);
+}
+
+.brand {
+  margin: 0;
+}
+
+.siteNav {
+  margin: 0;
+  max-width: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px clamp(14px, 2.5cqi, 32px);
+  color: var(--c-muted);
+}
+
+/* Hero ----------------------------------------------------------------- */
+
+.hero {
+  padding: var(--gap) var(--pad) calc(var(--gap) * 0.75);
+}
+
+.eyebrow {
+  color: var(--c-accent);
+  margin-bottom: 1.4em;
+}
+
+.headline {
+  margin: 0;
+}
+
+.lead {
+  margin-top: 1.1em;
+  color: var(--c-ink);
+}
+
+.actions {
+  margin-top: 2em;
+}
+
+.cta {
+  display: inline-block;
+  padding: 0.95em 1.6em;
+  background: var(--c-ink);
+  color: var(--c-paper);
+}
+
+/* Figure --------------------------------------------------------------- */
+
+.figure {
+  padding-inline: var(--pad);
+}
+
+.image {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--c-accent) 14%, var(--c-paper));
+  color: color-mix(in srgb, var(--c-accent) 40%, var(--c-paper));
+}
+
+/* Image stand-in: a single display glyph, art-directed rather than a stock photo. */
+.glyph {
+  font-family: var(--font-display);
+  font-weight: var(--text-display-weight);
+  font-variation-settings: normal;
+  font-size: clamp(120px, 40cqi, 520px);
+  line-height: 1;
+}
+
+.figure figcaption {
+  margin-top: 0.8em;
+  color: var(--c-muted);
+}
+
+/* Section -------------------------------------------------------------- */
+
+.section {
+  padding: var(--gap) var(--pad);
+}
+
+.sectionHead :global(.t-label) {
+  color: var(--c-accent);
+  margin-bottom: 1em;
+}
+
+.sectionBody {
+  display: grid;
+  gap: var(--gap);
+  margin-top: 1.5em;
+}
+
+.quote {
+  margin: 0;
+  padding-top: 1em;
+  border-top: 2px solid var(--c-ink);
+}
+
+.quote p {
+  margin: 0 0 0.6em;
+}
+
+.quote footer {
+  color: var(--c-muted);
+}
+
+/* Items ---------------------------------------------------------------- */
+
+.items {
+  padding: 0 var(--pad) var(--gap);
+}
+
+.itemsTitle {
+  padding-top: 0.8em;
+  border-top: 1px solid var(--c-rule);
+}
+
+.itemList {
+  display: grid;
+  gap: 28px;
+  margin: 24px 0 0;
+  max-width: none;
+}
+
+.item {
+  padding-top: 14px;
+  border-top: 1px solid var(--c-rule);
+}
+
+.item h4 {
+  margin: 0.15em 0 0.3em;
+}
+
+.itemMeta {
+  margin-bottom: 0;
+  color: var(--c-accent);
+}
+
+/* Footer --------------------------------------------------------------- */
+
+.siteFooter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 24px;
+  padding: 28px var(--pad) 36px;
+  border-top: 1px solid var(--c-rule);
+  color: var(--c-muted);
+}
+
+.siteFooter h6,
+.siteFooter p {
+  margin: 0;
+}
+
+/* Wider frames --------------------------------------------------------- */
+
+@container (min-width: 760px) {
+  .itemList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .sectionBody {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: start;
+  }
+}
+
+/* Showcase: centred, airy ---------------------------------------------- */
+
+.site[data-layout="showcase"] .siteHeader {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-bottom: 0;
+}
+
+.site[data-layout="showcase"] .hero,
+.site[data-layout="showcase"] .sectionHead,
+.site[data-layout="showcase"] .itemsTitle,
+.site[data-layout="showcase"] .item {
+  text-align: center;
+}
+
+.site[data-layout="showcase"] .hero > *,
+.site[data-layout="showcase"] .sectionHead > * {
+  margin-inline: auto;
+}
+
+.site[data-layout="showcase"] .siteNav {
+  justify-content: center;
+}
+
+.site[data-layout="showcase"] .item :where(p, h4) {
+  margin-inline: auto;
+}
+
+@container (min-width: 760px) {
+  .site[data-layout="showcase"] .sectionBody {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+  .site[data-layout="showcase"] .quote {
+    border-top: 0;
+    text-align: center;
+  }
+  .site[data-layout="showcase"] .quote p {
+    margin-inline: auto;
+  }
+}
+
+/* Editorial: masthead, article, sidebar -------------------------------- */
+
+.site[data-layout="editorial"] .siteHeader {
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 3px double var(--c-ink);
+}
+
+.site[data-layout="editorial"] .hero {
+  padding-bottom: calc(var(--gap) * 0.5);
+}
+
+.site[data-layout="editorial"] .lead {
+  padding-bottom: 1em;
+  border-bottom: 1px solid var(--c-rule);
+}
+
+.site[data-layout="editorial"] .actions {
+  display: none;
+}
+
+.site[data-layout="editorial"] .image {
+  aspect-ratio: 3 / 2;
+}
+
+@container (min-width: 960px) {
+  .site[data-layout="editorial"] .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    column-gap: var(--gap);
+  }
+  .site[data-layout="editorial"] .hero > * {
+    grid-column: 1;
+  }
+}
+
+/* Structured: grid, index, annotations --------------------------------- */
+
+.site[data-layout="structured"] .siteHeader {
+  border-bottom-color: var(--c-ink);
+}
+
+.site[data-layout="structured"] .item {
+  border-top-color: var(--c-ink);
+}
+
+@container (min-width: 760px) {
+  .site[data-layout="structured"] .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    column-gap: var(--gap);
+    align-items: end;
+  }
+  .site[data-layout="structured"] .eyebrow,
+  .site[data-layout="structured"] .headline {
+    grid-column: 1 / -1;
+  }
+  .site[data-layout="structured"] .lead {
+    grid-column: 2;
+  }
+  .site[data-layout="structured"] .actions {
+    grid-column: 2;
+  }
+  .site[data-layout="structured"] .section {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    column-gap: var(--gap);
+  }
+  .site[data-layout="structured"] .sectionBody {
+    margin-top: 0;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,117 @@
+import type { TypographySystem } from "../../types";
+import { ACCESSIBILITY_BASE, FLUID_RANGE, GREEK_BASE, WRAPPING_BASE, style } from "./shared";
+
+export const T008: TypographySystem = {
+  id: "T008",
+  name: "Soft Modern",
+  tagline: "A Latin-first soft serif with declared Greek companions — the script-split stack, done properly.",
+  summary:
+    "A wellness and lifestyle system built around Fraunces and DM Sans, neither of which has Greek. Instead of a fake fallback, each role declares a Greek companion — Literata and Manrope — that the browser uses glyph by glyph.",
+  personality: ["Soft", "Optimistic", "Tactile", "Relaxed"],
+  industries: ["wellness", "hospitality", "ecommerce", "editorial"],
+  rationale: [
+    "Fraunces' Softness and Wonky axes give rounded, slightly leaning letterforms with real warmth; DM Sans is a low-contrast geometric sans that recedes politely. Together they define the friendly-premium Latin look.",
+    "For Greek, Literata (opsz) is the nearest warm, optical-sized serif to Fraunces, and Manrope the nearest geometric sans to DM Sans. Each is placed second in its font stack, so Greek letters render in a real Greek design — never in Times or Arial.",
+    "This is the pattern to reuse whenever a brand insists on a Latin-only face: declare the companion explicitly, load it, and design the Greek pages with it in mind.",
+  ],
+  families: {
+    display: { font: "fraunces", greekCompanion: "literata", axes: ["opsz", "SOFT", "WONK"] },
+    heading: { font: "fraunces", greekCompanion: "literata", axes: ["opsz", "SOFT", "WONK"] },
+    body: { font: "dm-sans", greekCompanion: "manrope", axes: ["opsz"] },
+    ui: { font: "dm-sans", greekCompanion: "manrope", axes: ["opsz"] },
+  },
+  fluid: FLUID_RANGE,
+  styles: {
+    display: style("display", [46, 108], 400, 1.0, -0.02, { variation: "'SOFT' 100, 'WONK' 1" }),
+    h1: style("heading", [38, 76], 400, 1.05, -0.015, { variation: "'SOFT' 100" }),
+    h2: style("heading", [30, 50], 500, 1.1, -0.01, { variation: "'SOFT' 50" }),
+    h3: style("heading", [23, 30], 500, 1.2, -0.005, { variation: "'SOFT' 50" }),
+    h4: style("body", [19, 22], 600, 1.3, -0.01),
+    h5: style("body", [16, 17], 600, 1.4),
+    h6: style("ui", [12, 13], 600, 1.4, 0.1, { transform: "uppercase" }),
+    lead: style("body", [19, 22], 400, 1.5),
+    body: style("body", [16, 18], 400, 1.6),
+    small: style("body", [14, 15], 400, 1.5),
+    caption: style("ui", [13, 14], 400, 1.45),
+    label: style("ui", [12, 13], 600, 1.3, 0.1, { transform: "uppercase" }),
+    quote: style("heading", [26, 38], 400, 1.2, -0.01, { style: "italic", variation: "'SOFT' 100" }),
+  },
+  emphasis: { strongWeight: 600, italic: true },
+  measure: { body: 62, lead: 48, narrow: 38, heading: 16 },
+  flow: { paragraph: 1, headingBefore: 1.4, headingAfter: 0.45 },
+  guidance: {
+    measure: [
+      "Body at ~62ch; short paragraphs with plenty of space. Lead at ~48ch, often centred in hero sections.",
+    ],
+    wrapping: [...WRAPPING_BASE],
+    greek: [
+      ...GREEK_BASE,
+      "Greek glyphs come from the companions: Literata in headings, Manrope in text. Review Greek pages as their own design — Literata is sturdier than Fraunces, so Greek headlines feel slightly heavier.",
+      "Start companion stacks from --font-<id>-only, never --font-<id>: next/font's metric-adjusted local fallback (Times New Roman / Arial) has no unicode-range and would render Greek glyphs before the companion is reached.",
+      "Manrope has no italic: Greek <em> inside body text would be synthesised. Use <strong> (600) for emphasis in Greek copy, or set font-synthesis-style: none.",
+      "SOFT/WONK axes do not exist in Literata; font-variation-settings simply ignores them for Greek glyphs.",
+    ],
+    accessibility: [
+      ...ACCESSIBILITY_BASE,
+      "Mixed-script lines (e.g. a Greek sentence with an English brand name) combine two fonts; keep such lines at body size or larger so metric differences stay unnoticeable.",
+    ],
+    usage: [
+      "Display with WONK 1 for the hero only; all other headings keep WONK 0 for calmer shapes.",
+      "Prices and durations in small or caption, never in the serif.",
+    ],
+  },
+  palette: { paper: "#f3ede6", ink: "#2b2420", muted: "#7d6f66", accent: "#a4553a", rule: "#e3d8cd" },
+  composition: {
+    layout: "showcase",
+    content: {
+      en: {
+        brand: "Alkyon Bathhouse",
+        nav: ["Rituals", "Memberships", "Journal", "Book"],
+        eyebrow: "Bathhouse & studio · Athens",
+        headline: "Warm water, slow hours.",
+        lead: "A neighbourhood bathhouse in Pangrati with thermal pools, a cold plunge and quiet rooms for doing nothing at all.",
+        cta: "Book a ritual",
+        sectionLabel: "The ritual",
+        sectionTitle: "Heat, cold, rest, repeat",
+        body: [
+          "Begin in the steam room, move to the warm pool, then take a short cold plunge. Rest for as long as you need, and repeat the cycle two or three times.",
+          "Sessions last two hours. Towels, robes and mountain tea are included, and phones stay in the lockers — we promise you will not miss them.",
+        ],
+        quote: "The calmest two hours of my week.",
+        quoteSource: "Member since 2024",
+        itemsTitle: "Rituals",
+        items: [
+          { meta: "90 min · €38", title: "Thermal circuit", text: "Steam, warm pool, cold plunge and rest." },
+          { meta: "60 min · €65", title: "Olive oil massage", text: "Slow, warming massage with Cretan olive oil." },
+          { meta: "45 min · €24", title: "Morning stretch", text: "Gentle movement before the pools open." },
+        ],
+        caption: "The warm pool at dusk.",
+        footer: "Alkyon Bathhouse · Pangrati, Athens",
+      },
+      el: {
+        brand: "Λουτρά Αλκυών",
+        nav: ["Τελετουργικά", "Συνδρομές", "Ημερολόγιο", "Κράτηση"],
+        eyebrow: "Λουτρό & στούντιο · Αθήνα",
+        headline: "Ζεστό νερό, αργές ώρες.",
+        lead: "Ένα λουτρό της γειτονιάς στο Παγκράτι, με θερμές πισίνες, κρύα βουτιά και ήσυχα δωμάτια για να μην κάνετε απολύτως τίποτα.",
+        cta: "Κλείστε ένα τελετουργικό",
+        sectionLabel: "Το τελετουργικό",
+        sectionTitle: "Ζέστη, κρύο, ξεκούραση, ξανά",
+        body: [
+          "Ξεκινήστε από το χαμάμ, συνεχίστε στη ζεστή πισίνα και μετά κάντε μια σύντομη κρύα βουτιά. Ξεκουραστείτε όσο χρειάζεστε και επαναλάβετε τον κύκλο δύο ή τρεις φορές.",
+          "Κάθε συνεδρία διαρκεί δύο ώρες. Πετσέτες, μπουρνούζια και τσάι του βουνού περιλαμβάνονται, και τα κινητά μένουν στα ντουλάπια — σας υποσχόμαστε ότι δεν θα σας λείψουν.",
+        ],
+        quote: "Οι πιο ήρεμες δύο ώρες της εβδομάδας μου.",
+        quoteSource: "Μέλος από το 2024",
+        itemsTitle: "Τελετουργικά",
+        items: [
+          { meta: "90 λεπτά · 38 €", title: "Θερμική διαδρομή", text: "Χαμάμ, ζεστή πισίνα, κρύα βουτιά και ξεκούραση." },
+          { meta: "60 λεπτά · 65 €", title: "Μασάζ με ελαιόλαδο", text: "Αργό, ζεστό μασάζ με κρητικό ελαιόλαδο." },
+          { meta: "45 λεπτά · 24 €", title: "Πρωινές διατάσεις", text: "Ήπια κίνηση πριν ανοίξουν οι πισίνες." },
+        ],
+        caption: "Η ζεστή πισίνα το σούρουπο.",
+        footer: "Λουτρά Αλκυών · Παγκράτι, Αθήνα",
+      },
+    },
+  },
+};

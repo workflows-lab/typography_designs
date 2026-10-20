@@ -1,0 +1,118 @@
+import type { TypographySystem } from "../../types";
+import { ACCESSIBILITY_BASE, FLUID_RANGE, GREEK_BASE, WRAPPING_BASE, style } from "./shared";
+
+export const T001: TypographySystem = {
+  id: "T001",
+  name: "Didot Atelier",
+  tagline: "Hellenic couture: high-contrast Greek Didot over a Garamond-rooted sans.",
+  summary:
+    "A luxury system built on the typeface most associated with Greek books and culture. GFS Didot carries every large moment in a single weight; Ysabeau handles reading and interface with humanist calm.",
+  personality: ["Couture", "Classical", "Quiet confidence", "Generous space"],
+  industries: ["luxury", "fashion", "hospitality", "culture"],
+  rationale: [
+    "GFS Didot is the authentic Greek didone — not a Latin Didot with borrowed Greek. In Greek it reads as heritage; in Latin it reads as fashion. That double meaning is the system's core.",
+    "Didot has one weight, so hierarchy comes from size, spacing and case. The scale is steep at the top (display → h3) and gentle below, where Ysabeau takes over.",
+    "Ysabeau is a sans with Garamond's proportions: its Renaissance skeleton relates to Didot's classical forms, so the pairing feels inherited rather than assembled. Its true italic gives captions a handwritten note.",
+  ],
+  families: {
+    display: { font: "gfs-didot" },
+    heading: { font: "gfs-didot" },
+    body: { font: "ysabeau" },
+    ui: { font: "ysabeau" },
+  },
+  fluid: FLUID_RANGE,
+  styles: {
+    display: style("display", [48, 112], 400, 0.98, -0.01),
+    h1: style("heading", [40, 84], 400, 1.02, -0.01),
+    h2: style("heading", [32, 56], 400, 1.08, -0.005),
+    h3: style("heading", [26, 38], 400, 1.15),
+    h4: style("heading", [21, 26], 400, 1.25),
+    h5: style("ui", [17, 19], 600, 1.35, 0.01),
+    h6: style("ui", [13, 14], 600, 1.4, 0.14, { transform: "uppercase" }),
+    lead: style("body", [20, 26], 300, 1.45),
+    body: style("body", [17, 19], 400, 1.62),
+    small: style("body", [15, 16], 400, 1.5),
+    caption: style("ui", [13, 14], 400, 1.45, 0.01, { style: "italic" }),
+    label: style("ui", [12, 13], 600, 1.3, 0.16, { transform: "uppercase" }),
+    quote: style("heading", [26, 40], 400, 1.2),
+  },
+  emphasis: { strongWeight: 600, italic: true },
+  measure: { body: 64, lead: 52, narrow: 44, heading: 18 },
+  flow: { paragraph: 1, headingBefore: 1.4, headingAfter: 0.45 },
+  guidance: {
+    measure: [
+      "Body text at 60–66 characters. Luxury layouts benefit from narrow, centred columns: set the lead to ~52ch and centre the text block, never the paragraph alignment of long text.",
+      "Display lines should break into 2–3 lines of 12–18 characters; GFS Didot's beauty is in the large, slow shapes.",
+    ],
+    wrapping: [...WRAPPING_BASE, "Never justify Didot headlines — the hairlines exaggerate uneven word spacing."],
+    greek: [
+      ...GREEK_BASE,
+      "GFS Didot has no latin-ext subset: Polish, Czech or Turkish names will fall back. Check proper names in the Latin version.",
+      "Greek capitals in Didot are particularly elegant at wide tracking (label style). Keep uppercase Greek short — one to three words.",
+    ],
+    accessibility: [
+      ...ACCESSIBILITY_BASE,
+      "Didot hairlines thin out on low-resolution screens: GFS Didot never goes below 21px (h4). Captions and labels use Ysabeau.",
+      "Lead text at weight 300 stays ≥ 20px, where the light weight keeps sufficient stroke thickness.",
+    ],
+    usage: [
+      "One display statement per view. Let the rest of the page be quiet.",
+      "Use the label style for navigation, eyebrows and buttons; it gives the uppercase-tracked couture signature.",
+      "Prices and product names: h4 in Didot over caption in Ysabeau italic.",
+    ],
+  },
+  palette: { paper: "#f5f1ea", ink: "#1d1a16", muted: "#6e675d", accent: "#8c6a3e", rule: "#d9d1c4" },
+  composition: {
+    layout: "showcase",
+    content: {
+      en: {
+        brand: "Elara Atelier",
+        nav: ["Collections", "Atelier", "Journal", "Visit"],
+        eyebrow: "Autumn–Winter 2026",
+        headline: "Light, held in gold.",
+        lead: "Hand-finished jewellery from our atelier in Kolonaki, shaped by the geometry of ancient votive offerings.",
+        cta: "Discover the collection",
+        sectionLabel: "The Atelier",
+        sectionTitle: "Made slowly, by hand",
+        body: [
+          "Every piece begins as a drawing and ends at the bench, where it is cut, hammered and polished by one of five goldsmiths. We work in small editions, so that each object keeps the trace of the hand that made it.",
+          "Our gold is recycled and certified, our pearls are sourced from family farms, and every piece can be returned to us for repair — for as long as it is worn.",
+        ],
+        quote: "We do not chase trends. We return, again and again, to the line.",
+        quoteSource: "Daphne Elara, founder",
+        itemsTitle: "Collections",
+        items: [
+          { meta: "01", title: "Votive", text: "Hammered gold discs inspired by temple offerings." },
+          { meta: "02", title: "Meander", text: "Continuous lines in recycled silver." },
+          { meta: "03", title: "Kore", text: "Pearls and fine chains, archaic in spirit." },
+        ],
+        caption: "Votive earrings, 18k recycled gold. Photographed in the atelier.",
+        footer: "Elara Atelier · Kolonaki, Athens",
+      },
+      el: {
+        brand: "Εργαστήριο Ελάρα",
+        nav: ["Συλλογές", "Εργαστήριο", "Ημερολόγιο", "Επίσκεψη"],
+        eyebrow: "Φθινόπωρο–Χειμώνας 2026",
+        headline: "Φως, κρατημένο στο χρυσάφι.",
+        lead: "Χειροποίητα κοσμήματα από το εργαστήριό μας στο Κολωνάκι, εμπνευσμένα από τη γεωμετρία των αρχαίων αναθημάτων.",
+        cta: "Ανακαλύψτε τη συλλογή",
+        sectionLabel: "Το εργαστήριο",
+        sectionTitle: "Φτιαγμένα αργά, με το χέρι",
+        body: [
+          "Κάθε κόσμημα ξεκινά ως σχέδιο και ολοκληρώνεται στον πάγκο, όπου το κόβει, το σφυρηλατεί και το γυαλίζει ένας από τους πέντε χρυσοχόους μας. Δουλεύουμε σε μικρές σειρές, ώστε κάθε αντικείμενο να κρατά το ίχνος του χεριού που το έφτιαξε.",
+          "Ο χρυσός μας είναι ανακυκλωμένος και πιστοποιημένος, τα μαργαριτάρια προέρχονται από οικογενειακές καλλιέργειες, και κάθε κομμάτι μπορεί να επιστρέψει σε εμάς για επισκευή — για όσο καιρό φοριέται.",
+        ],
+        quote: "Δεν κυνηγάμε τις τάσεις. Επιστρέφουμε, ξανά και ξανά, στη γραμμή.",
+        quoteSource: "Δάφνη Ελάρα, ιδρύτρια",
+        itemsTitle: "Συλλογές",
+        items: [
+          { meta: "01", title: "Ανάθημα", text: "Σφυρήλατοι χρυσοί δίσκοι, εμπνευσμένοι από τις προσφορές στους ναούς." },
+          { meta: "02", title: "Μαίανδρος", text: "Συνεχείς γραμμές σε ανακυκλωμένο ασήμι." },
+          { meta: "03", title: "Κόρη", text: "Μαργαριτάρια και λεπτές αλυσίδες, με αρχαϊκό πνεύμα." },
+        ],
+        caption: "Σκουλαρίκια Ανάθημα, ανακυκλωμένος χρυσός 18 καρατίων. Φωτογραφημένα στο εργαστήριο.",
+        footer: "Εργαστήριο Ελάρα · Κολωνάκι, Αθήνα",
+      },
+    },
+  },
+};

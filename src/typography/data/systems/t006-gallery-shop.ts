@@ -1,0 +1,118 @@
+import type { TypographySystem } from "../../types";
+import { ACCESSIBILITY_BASE, FLUID_RANGE, GREEK_BASE, WRAPPING_BASE, style } from "./shared";
+
+export const T006: TypographySystem = {
+  id: "T006",
+  name: "Gallery Shop",
+  tagline: "Wide, graphic display sans for commerce with attitude; engineered grotesk for the details.",
+  summary:
+    "An e-commerce and creative-brand system where headlines behave like graphic objects. Syne's extra-bold weights widen into posters; IBM Plex Sans keeps prices, sizes and checkout text exact.",
+  personality: ["Bold", "Graphic", "Contemporary", "Curated"],
+  industries: ["ecommerce", "fashion", "culture", "technology"],
+  rationale: [
+    "Syne's width grows with its weight. At 700–800 it becomes wide and blocky — instantly recognisable as a brand voice — and its Greek, drawn by George Triantafyllakos, keeps that silhouette.",
+    "IBM Plex Sans is engineered and slightly idiosyncratic: neutral enough for product data, characterful enough not to vanish beside Syne. Its width axis (85) produces compact labels for filters, sizes and badges.",
+    "The combination gives a strong top and a disciplined bottom — what commerce needs: a reason to look and certainty when buying.",
+  ],
+  families: {
+    display: { font: "syne" },
+    heading: { font: "syne" },
+    body: { font: "ibm-plex-sans" },
+    ui: { font: "ibm-plex-sans", axes: ["wdth"] },
+  },
+  fluid: FLUID_RANGE,
+  styles: {
+    display: style("display", [44, 104], 800, 0.92, -0.03),
+    h1: style("heading", [36, 72], 800, 0.98, -0.025),
+    h2: style("heading", [28, 48], 700, 1.05, -0.02),
+    h3: style("heading", [22, 30], 700, 1.15, -0.01),
+    h4: style("heading", [19, 22], 600, 1.25),
+    h5: style("body", [16, 17], 600, 1.35),
+    h6: style("ui", [12, 13], 600, 1.4, 0.06, { transform: "uppercase", variation: "'wdth' 85" }),
+    lead: style("body", [18, 22], 400, 1.45, -0.005),
+    body: style("body", [16, 17], 400, 1.6),
+    small: style("body", [14, 15], 400, 1.5),
+    caption: style("ui", [13, 14], 400, 1.45),
+    label: style("ui", [12, 13], 600, 1.3, 0.05, { transform: "uppercase", variation: "'wdth' 85" }),
+    quote: style("heading", [24, 36], 700, 1.15, -0.015),
+  },
+  emphasis: { strongWeight: 600, italic: true },
+  measure: { body: 62, lead: 50, narrow: 36, heading: 14 },
+  flow: { paragraph: 1, headingBefore: 1.3, headingAfter: 0.4 },
+  guidance: {
+    measure: [
+      "Product descriptions at ≤ 62ch; specification lists at ~36ch beside the gallery.",
+      "Display headlines should be 2–4 words. Syne at 800 is wide: let it fill the column.",
+    ],
+    wrapping: [...WRAPPING_BASE, "Product names (h4) may wrap to two lines; clamp longer names with line-clamp in grids rather than shrinking type."],
+    greek: [
+      ...GREEK_BASE,
+      "Syne's wide bold weights make Greek headlines considerably longer than English — use h1 rather than display for Greek campaign lines over 3 words.",
+      "Prices: '68 €' in Greek (symbol after, with a space) vs '€68' in English. Keep the convention per locale.",
+    ],
+    accessibility: [
+      ...ACCESSIBILITY_BASE,
+      "Display line-height is tight (0.92): never use display or h1 styles for text longer than two lines.",
+      "Prices and sizes use body or label styles at ≥ 13px; never put critical purchase information in display type.",
+    ],
+    usage: [
+      "Use font-variant-numeric: tabular-nums for prices in lists and carts.",
+      "Labels (compressed uppercase) for filters, badges and buttons.",
+      "Accent colour for one action per view: Add to cart.",
+    ],
+  },
+  palette: { paper: "#f4f3ef", ink: "#0e0e0e", muted: "#5e5b55", accent: "#3b37ff", rule: "#d9d6cf" },
+  composition: {
+    layout: "structured",
+    content: {
+      en: {
+        brand: "Forma Objects",
+        nav: ["Shop", "New in", "Studios", "Cart (2)"],
+        eyebrow: "New in · Ceramics",
+        headline: "Objects with a point of view.",
+        lead: "Limited editions from independent studios across the Mediterranean. Free delivery in Greece and Cyprus on orders over €80.",
+        cta: "Shop the drop",
+        sectionLabel: "Featured studio",
+        sectionTitle: "Pottery from Sifnos, rethought",
+        body: [
+          "Sifnos has a pottery tradition that goes back millennia. Studio Kamini works with the island's clay and wood-fired kilns, but draws its forms from contemporary architecture.",
+          "Each vessel is thrown by hand and glazed in small batches, so colours vary slightly from piece to piece. That variation is the point.",
+        ],
+        quote: "Good objects should look like someone made them.",
+        quoteSource: "Nikos Kaminis, potter",
+        itemsTitle: "Best sellers",
+        items: [
+          { meta: "€68", title: "Kamini carafe", text: "Wood-fired stoneware, 1 L" },
+          { meta: "€42", title: "Meltemi tumblers", text: "Hand-blown glass, set of two" },
+          { meta: "€120", title: "Pefko side table", text: "Solid Aleppo pine, oiled" },
+        ],
+        caption: "Kamini carafe in Aegean blue glaze.",
+        footer: "Forma Objects · Ships from Athens",
+      },
+      el: {
+        brand: "Forma Objects",
+        nav: ["Κατάστημα", "Νέες αφίξεις", "Εργαστήρια", "Καλάθι (2)"],
+        eyebrow: "Νέες αφίξεις · Κεραμικά",
+        headline: "Αντικείμενα με άποψη.",
+        lead: "Περιορισμένες σειρές από ανεξάρτητα εργαστήρια της Μεσογείου. Δωρεάν αποστολή σε Ελλάδα και Κύπρο για παραγγελίες άνω των 80 €.",
+        cta: "Δείτε τη συλλογή",
+        sectionLabel: "Εργαστήριο της εβδομάδας",
+        sectionTitle: "Κεραμική από τη Σίφνο, με νέα ματιά",
+        body: [
+          "Η Σίφνος έχει παράδοση στην κεραμική που μετρά χιλιετίες. Το Studio Kamini δουλεύει με τον πηλό και τα ξυλόφουρνα του νησιού, αλλά αντλεί τις φόρμες του από τη σύγχρονη αρχιτεκτονική.",
+          "Κάθε σκεύος πλάθεται στον τροχό και υαλώνεται σε μικρές παρτίδες, έτσι τα χρώματα διαφέρουν ελαφρώς από κομμάτι σε κομμάτι. Αυτή η διαφορά είναι το ζητούμενο.",
+        ],
+        quote: "Ένα καλό αντικείμενο πρέπει να δείχνει ότι το έφτιαξε κάποιος.",
+        quoteSource: "Νίκος Καμίνης, κεραμίστας",
+        itemsTitle: "Δημοφιλή",
+        items: [
+          { meta: "68 €", title: "Καράφα Kamini", text: "Ψημένη σε ξυλόφουρνο, 1 λίτρο" },
+          { meta: "42 €", title: "Ποτήρια Μελτέμι", text: "Φυσητό γυαλί, σετ των δύο" },
+          { meta: "120 €", title: "Τραπεζάκι Πεύκο", text: "Μασίφ χαλέπιος πεύκη, λαδωμένο" },
+        ],
+        caption: "Καράφα Kamini σε μπλε υάλωμα του Αιγαίου.",
+        footer: "Forma Objects · Αποστολή από την Αθήνα",
+      },
+    },
+  },
+};

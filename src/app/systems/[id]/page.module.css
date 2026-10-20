@@ -1,0 +1,245 @@
+/* Hero: the system speaks for itself, on its own palette ---------------- */
+
+.hero {
+  background: var(--c-paper);
+  color: var(--c-ink);
+  border-bottom: 1px solid var(--lab-rule-strong);
+  padding-block: var(--lab-space-8);
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 20rem);
+  gap: var(--lab-space-7);
+  align-items: end;
+}
+
+.heroType {
+  min-width: 0;
+}
+
+.heroLabel {
+  color: var(--c-accent);
+  margin-bottom: 1.2em;
+}
+
+.heroTitle {
+  margin: 0;
+}
+
+.heroLead {
+  margin-top: 1em;
+}
+
+.heroGreek {
+  margin-top: 1.4em;
+  margin-bottom: 0;
+  color: var(--c-muted);
+}
+
+.heroAside {
+  display: grid;
+  gap: var(--lab-space-5);
+  font-family: var(--lab-sans);
+}
+
+.heroFacts {
+  border-top: 1px solid var(--c-ink);
+  font-size: var(--lab-text-sm);
+}
+
+.heroFacts > div {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: var(--lab-space-3);
+  padding-block: var(--lab-space-2);
+  border-bottom: 1px solid var(--c-rule);
+}
+
+.heroFacts dt {
+  font-family: var(--lab-mono);
+  font-size: var(--lab-text-xs);
+  color: var(--c-muted);
+  padding-top: 0.1rem;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lab-space-2);
+}
+
+.primaryAction,
+.secondaryAction {
+  padding: 0.55rem 1rem;
+  font-size: var(--lab-text-sm);
+  text-decoration: none;
+  border: 1px solid var(--c-ink);
+}
+
+.primaryAction {
+  background: var(--c-ink);
+  color: var(--c-paper);
+}
+
+.primaryAction:hover,
+.secondaryAction:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 60rem) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Overview ------------------------------------------------------------- */
+
+.overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: var(--lab-space-7);
+}
+
+.summary {
+  font-size: var(--lab-text-lg);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.rationale {
+  display: grid;
+  gap: var(--lab-space-4);
+  color: var(--lab-ink-2);
+  max-width: 66ch;
+}
+
+.rationale p {
+  text-wrap: pretty;
+}
+
+@media (max-width: 56rem) {
+  .overview {
+    grid-template-columns: 1fr;
+    gap: var(--lab-space-5);
+  }
+}
+
+/* Guidance ------------------------------------------------------------- */
+
+.guidelines {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: var(--lab-space-6);
+}
+
+.guidance[data-wide] {
+  grid-column: 1 / -1;
+}
+
+.guidance[data-wide] .guidanceList {
+  columns: 2 22rem;
+  column-gap: var(--lab-space-7);
+}
+
+.guidanceTitle {
+  font-family: var(--lab-mono);
+  font-size: var(--lab-text-xs);
+  font-weight: 400;
+  color: var(--lab-ink-3);
+  padding-bottom: var(--lab-space-2);
+  margin-bottom: var(--lab-space-3);
+  border-bottom: 1px solid var(--lab-rule);
+}
+
+.guidanceList {
+  display: grid;
+  gap: var(--lab-space-3);
+}
+
+.guidance[data-wide] .guidanceList {
+  display: block;
+}
+
+.guidanceList li {
+  position: relative;
+  padding-left: 1.1rem;
+  color: var(--lab-ink-2);
+  text-wrap: pretty;
+  break-inside: avoid;
+  margin-bottom: var(--lab-space-3);
+}
+
+.guidanceList li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--lab-accent);
+}
+
+.measureFacts {
+  font-family: var(--lab-mono);
+  font-size: var(--lab-text-xs);
+  margin-bottom: var(--lab-space-3);
+}
+
+.accessibility {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: var(--lab-space-7);
+}
+
+@media (max-width: 56rem) {
+  .accessibility {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Implementation ------------------------------------------------------- */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: var(--lab-space-4);
+  margin-bottom: var(--lab-space-6);
+  counter-reset: step;
+}
+
+.steps li {
+  counter-increment: step;
+  padding-top: var(--lab-space-3);
+  border-top: 1px solid var(--lab-rule-strong);
+  font-size: var(--lab-text-sm);
+}
+
+.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  display: block;
+  margin-bottom: var(--lab-space-2);
+  font-family: var(--lab-mono);
+  font-size: var(--lab-text-xs);
+  color: var(--lab-accent);
+}
+
+.steps code {
+  font-family: var(--lab-mono);
+  font-size: 0.8125rem;
+}
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--lab-space-4);
+  padding-top: var(--lab-space-6);
+  border-top: 1px solid var(--lab-rule);
+  font-size: var(--lab-text-sm);
+}
+
+.pager a {
+  text-decoration: none;
+}
+
+.pager a:hover {
+  text-decoration: underline;
+}

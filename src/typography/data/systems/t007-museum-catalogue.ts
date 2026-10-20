@@ -1,0 +1,121 @@
+import type { TypographySystem } from "../../types";
+import { ACCESSIBILITY_BASE, FLUID_RANGE, GREEK_BASE, WRAPPING_BASE, style } from "./shared";
+
+export const T007: TypographySystem = {
+  id: "T007",
+  name: "Museum Catalogue",
+  tagline: "Renaissance Garamond for scholarship, a compact sans for labels and wayfinding.",
+  summary:
+    "A cultural-institution system modelled on exhibition catalogues: one Garamond for everything that is read, set with old-style figures and italic titles; a compact sans for object labels, credits and navigation.",
+  personality: ["Scholarly", "Timeless", "Literary", "Composed"],
+  industries: ["culture", "education", "professional", "luxury"],
+  rationale: [
+    "EB Garamond is based on the 1592 Egenolff–Berner specimen and carries polytonic Greek — essential for museums and universities quoting ancient texts. Using it for display, headings and body produces the unity of a well-made book.",
+    "Old-style figures (onum) in running text let dates sit quietly in sentences; italic h3s echo catalogue entry titles.",
+    "Sofia Sans is compact and modern. It does the institutional work — inventory numbers, credits, opening hours, wayfinding — and its narrow widths absorb Greek's longer words on labels.",
+  ],
+  families: {
+    display: { font: "eb-garamond" },
+    heading: { font: "eb-garamond" },
+    body: { font: "eb-garamond" },
+    ui: { font: "sofia-sans" },
+  },
+  fluid: FLUID_RANGE,
+  styles: {
+    display: style("display", [44, 100], 400, 1.0, -0.015),
+    h1: style("heading", [38, 72], 400, 1.05, -0.01),
+    h2: style("heading", [30, 48], 400, 1.12, -0.005),
+    h3: style("heading", [24, 32], 500, 1.2, 0, { style: "italic" }),
+    h4: style("heading", [20, 24], 600, 1.3),
+    h5: style("ui", [16, 17], 600, 1.35, 0.01),
+    h6: style("ui", [12, 13], 600, 1.4, 0.12, { transform: "uppercase" }),
+    lead: style("body", [21, 26], 400, 1.45),
+    body: style("body", [18, 20], 400, 1.55, 0, { features: "'onum' 1, 'pnum' 1" }),
+    small: style("ui", [14, 15], 400, 1.5),
+    caption: style("ui", [13, 14], 400, 1.45, 0.005),
+    label: style("ui", [12, 13], 600, 1.3, 0.12, { transform: "uppercase" }),
+    quote: style("heading", [26, 38], 400, 1.25, 0, { style: "italic" }),
+  },
+  emphasis: { strongWeight: 600, italic: true },
+  measure: { body: 64, lead: 54, narrow: 40, heading: 20 },
+  flow: { paragraph: 1, headingBefore: 1.5, headingAfter: 0.45 },
+  guidance: {
+    measure: [
+      "Essays and room texts at 60–66ch. Object labels at ~40ch, set in the caption style.",
+      "Allow generous margins: catalogue pages earn their calm from white space, not from rules and boxes.",
+    ],
+    wrapping: [
+      ...WRAPPING_BASE,
+      "Keep inventory numbers, dates and dimensions unbroken (non-breaking spaces: 21 × 14 cm, Inv. 1204).",
+    ],
+    greek: [
+      ...GREEK_BASE,
+      "EB Garamond includes polytonic Greek: quote ancient texts in their original orthography in the same font as the surrounding modern Greek.",
+      "The body uses old-style figures; for tables of dates or dimensions switch to lining tabular figures (font-variant-numeric: lining-nums tabular-nums).",
+    ],
+    accessibility: [
+      ...ACCESSIBILITY_BASE,
+      "Garamond's small x-height is compensated with an 18–20px body size.",
+      "Italic is limited to titles, quotes and h3 — never paragraphs of running text.",
+    ],
+    usage: [
+      "Exhibition titles in display or h1 roman; artwork titles in italic (h3 or <cite>).",
+      "Object labels: h4 (title) → caption (medium, date, dimensions) → small (credit line).",
+      "Uppercase Sofia Sans labels for room numbers and wayfinding only.",
+    ],
+  },
+  palette: { paper: "#f3efe6", ink: "#22201c", muted: "#6b665c", accent: "#6d2a2a", rule: "#d8d1c2" },
+  composition: {
+    layout: "editorial",
+    content: {
+      en: {
+        brand: "Ionian Museum of the Book",
+        nav: ["Exhibitions", "Collection", "Visit", "Learn"],
+        eyebrow: "Temporary exhibition · Until 12 April 2027",
+        headline: "Ink & Exile: Greek printers in Renaissance Venice",
+        lead: "How refugee scholars and craftsmen from Crete and Constantinople helped bring Greek letters to the printing press.",
+        cta: "Plan your visit",
+        sectionLabel: "Room 2",
+        sectionTitle: "The Aldine workshop",
+        body: [
+          "In the decades after 1453, Greek scholars carried manuscripts, knowledge and craft skills westward. In Venice they found printers ready to invest in a difficult new problem: how to set a script full of accents and ligatures in movable type.",
+          "This room brings together type specimens, proof sheets and early editions associated with the workshop of Aldus Manutius, where Greek editors and compositors worked alongside Venetian punchcutters.",
+        ],
+        quote: "Without Greek letters, the new art of printing would have been half an art.",
+        quoteSource: "From the exhibition catalogue",
+        itemsTitle: "In the collection",
+        items: [
+          { meta: "Inv. 1204", title: "Erotemata of Constantine Lascaris", text: "Printed in Milan, 1476" },
+          { meta: "Inv. 0877", title: "Greek type matrices", text: "Copper, 16th century" },
+          { meta: "Inv. 2310", title: "Compositor's stick", text: "Walnut and brass" },
+        ],
+        caption: "Fig. 12 — Opening page of a Greek grammar, printed in 1476. Paper and ink, 21 × 14 cm.",
+        footer: "Ionian Museum of the Book · Corfu",
+      },
+      el: {
+        brand: "Ιόνιο Μουσείο του Βιβλίου",
+        nav: ["Εκθέσεις", "Συλλογή", "Επίσκεψη", "Εκπαίδευση"],
+        eyebrow: "Περιοδική έκθεση · Έως 12 Απριλίου 2027",
+        headline: "Μελάνι και εξορία: Έλληνες τυπογράφοι στην αναγεννησιακή Βενετία",
+        lead: "Πώς πρόσφυγες λόγιοι και τεχνίτες από την Κρήτη και την Κωνσταντινούπολη έφεραν τα ελληνικά γράμματα στο τυπογραφικό πιεστήριο.",
+        cta: "Σχεδιάστε την επίσκεψή σας",
+        sectionLabel: "Αίθουσα 2",
+        sectionTitle: "Το εργαστήριο του Άλδου",
+        body: [
+          "Τις δεκαετίες μετά το 1453, Έλληνες λόγιοι μετέφεραν προς τη Δύση χειρόγραφα, γνώση και τεχνική δεξιότητα. Στη Βενετία βρήκαν τυπογράφους πρόθυμους να επενδύσουν σε ένα δύσκολο νέο πρόβλημα: πώς να στοιχειοθετηθεί με κινητά στοιχεία μια γραφή γεμάτη τόνους και συμπλέγματα.",
+          "Η αίθουσα αυτή συγκεντρώνει δείγματα στοιχείων, δοκίμια και πρώιμες εκδόσεις που συνδέονται με το εργαστήριο του Άλδου Μανούτιου, όπου Έλληνες επιμελητές και στοιχειοθέτες δούλευαν δίπλα σε Βενετούς χαράκτες.",
+        ],
+        quote: "Χωρίς τα ελληνικά γράμματα, η νέα τέχνη της τυπογραφίας θα ήταν μισή τέχνη.",
+        quoteSource: "Από τον κατάλογο της έκθεσης",
+        itemsTitle: "Από τη συλλογή",
+        items: [
+          { meta: "Αρ. 1204", title: "Ερωτήματα του Κωνσταντίνου Λασκάρεως", text: "Τυπώθηκε στο Μιλάνο, 1476" },
+          { meta: "Αρ. 0877", title: "Μήτρες ελληνικών στοιχείων", text: "Χαλκός, 16ος αιώνας" },
+          { meta: "Αρ. 2310", title: "Συνθετήριο στοιχειοθέτη", text: "Καρυδιά και ορείχαλκος" },
+        ],
+        caption: "Εικ. 12 — Πρώτη σελίδα ελληνικής γραμματικής, τυπωμένης το 1476. Χαρτί και μελάνι, 21 × 14 εκ.",
+        footer: "Ιόνιο Μουσείο του Βιβλίου · Κέρκυρα",
+      },
+    },
+  },
+};

@@ -1,0 +1,122 @@
+import type { TypographySystem } from "../../types";
+import { ACCESSIBILITY_BASE, FLUID_RANGE, GREEK_BASE, WRAPPING_BASE, style } from "./shared";
+
+export const T005: TypographySystem = {
+  id: "T005",
+  name: "Bilingual Broadsheet",
+  tagline: "Condensed headline serif, optical-size reading serif, neutral sans for the newsroom furniture.",
+  summary:
+    "A publishing system for long reads and news in both languages. Headlines use the width axis to stay compact even when Greek runs long; body text uses optical sizes for comfortable reading at any size.",
+  personality: ["Authoritative", "Dense", "Literate", "Contemporary"],
+  industries: ["editorial", "culture", "education", "professional"],
+  rationale: [
+    "Noto Serif Display's width axis is the reason for this system: at wdth 72–80 headlines become newspaper-condensed, absorbing Greek's 10–20% extra length without shrinking the size.",
+    "Literata, designed by TypeTogether for e-reading, is sturdy and warm in text with full polytonic Greek. Optical sizing is automatic, so the same family yields tougher captions and finer pull quotes.",
+    "Inter handles the newsroom furniture — bylines, section labels, captions, timestamps — so both serifs can keep a single job each.",
+  ],
+  families: {
+    display: { font: "noto-serif-display", axes: ["wdth"] },
+    heading: { font: "noto-serif-display", axes: ["wdth"] },
+    body: { font: "literata", axes: ["opsz"] },
+    ui: { font: "inter", axes: ["opsz"] },
+  },
+  fluid: FLUID_RANGE,
+  styles: {
+    display: style("display", [44, 108], 600, 0.98, -0.02, { variation: "'wdth' 72" }),
+    h1: style("heading", [38, 84], 600, 1.0, -0.015, { variation: "'wdth' 75" }),
+    h2: style("heading", [30, 54], 600, 1.08, -0.01, { variation: "'wdth' 80" }),
+    h3: style("heading", [24, 32], 600, 1.18, -0.005, { variation: "'wdth' 90" }),
+    h4: style("body", [20, 24], 700, 1.3),
+    h5: style("ui", [15, 16], 700, 1.4, -0.005),
+    h6: style("ui", [12, 13], 600, 1.4, 0.08, { transform: "uppercase" }),
+    lead: style("body", [20, 25], 400, 1.45),
+    body: style("body", [17, 19], 400, 1.6),
+    small: style("ui", [14, 15], 400, 1.5),
+    caption: style("ui", [13, 14], 400, 1.45),
+    label: style("ui", [11, 12], 700, 1.3, 0.1, { transform: "uppercase" }),
+    quote: style("heading", [28, 44], 500, 1.15, -0.01, { style: "italic" }),
+  },
+  emphasis: { strongWeight: 700, italic: true },
+  measure: { body: 66, lead: 58, narrow: 40, heading: 22 },
+  flow: { paragraph: 1, headingBefore: 1.5, headingAfter: 0.4 },
+  guidance: {
+    measure: [
+      "Article body at 62–68ch in a single column; never stretch to the full container.",
+      "Standfirsts (lead) can run a little wider (≈58ch) because of their larger size.",
+      "Card grids: headlines in h4/h3, 3–4 lines maximum.",
+    ],
+    wrapping: [
+      ...WRAPPING_BASE,
+      "For narrow multi-column layouts (print-like), enable hyphens: auto with the correct lang. Literata hyphenates well in Greek in Firefox and Chromium.",
+    ],
+    greek: [
+      ...GREEK_BASE,
+      "Greek headlines: keep the condensed widths (wdth 72–80). Reduce width before reducing size when a Greek headline wraps to too many lines.",
+      "Literata includes polytonic Greek: classical quotations render correctly without a font switch.",
+    ],
+    accessibility: [
+      ...ACCESSIBILITY_BASE,
+      "Section labels at 11–12px use weight 700 and 0.1em tracking — reserve them for 1–3 word labels.",
+      "Body text starts at 17px. Condensed widths are only used at ≥ 24px.",
+    ],
+    usage: [
+      "Label (section) → h1 → lead → byline (small) is the canonical article header.",
+      "Pull quotes use the italic display serif; keep them under 25 words.",
+      "Use Inter's tabular figures for timestamps, scores and tables.",
+    ],
+  },
+  palette: { paper: "#fbfaf7", ink: "#121212", muted: "#5c5c5c", accent: "#b3121e", rule: "#dcdad4" },
+  composition: {
+    layout: "editorial",
+    content: {
+      en: {
+        brand: "The Aegean Review",
+        nav: ["Politics", "Culture", "Science", "Opinion"],
+        eyebrow: "Long read · Climate",
+        headline: "The islands are running out of water. Some have a plan.",
+        lead: "From desalination on Kythnos to restored terraces on Tinos, a new generation of local projects is rethinking how the Cyclades survive the summer.",
+        cta: "Continue reading",
+        sectionLabel: "Reporting from Tinos",
+        sectionTitle: "Terraces that hold the rain",
+        body: [
+          "For centuries, dry-stone terraces slowed the winter rain long enough for it to soak into the hillsides. As farming declined, the walls collapsed, and the water began to rush straight to the sea.",
+          "Today, volunteers and a handful of farmers are rebuilding them stone by stone. Early measurements suggest that restored slopes retain noticeably more moisture through the dry months.",
+        ],
+        quote: "A terrace is a machine for keeping water. We just forgot how to use it.",
+        quoteSource: "Eleni Vlachou, agronomist",
+        itemsTitle: "More from this issue",
+        items: [
+          { meta: "Culture · 8 min", title: "The last floating cinema", text: "How a screen on a boat kept film alive in the Dodecanese." },
+          { meta: "Science · 12 min", title: "Listening to the Hellenic Trench", text: "Seismologists are mapping one of Europe's most active faults." },
+          { meta: "Opinion · 5 min", title: "Tourism needs a slower season", text: "Why spreading visitors across the year matters." },
+        ],
+        caption: "Restored terraces above Kardiani, Tinos. Photograph: M. Roussou.",
+        footer: "The Aegean Review · Issue 112",
+      },
+      el: {
+        brand: "Η Επιθεώρηση του Αιγαίου",
+        nav: ["Πολιτική", "Πολιτισμός", "Επιστήμη", "Γνώμη"],
+        eyebrow: "Εκτενές άρθρο · Κλίμα",
+        headline: "Τα νησιά ξεμένουν από νερό. Κάποια έχουν σχέδιο.",
+        lead: "Από την αφαλάτωση στην Κύθνο έως τις αναστηλωμένες πεζούλες στην Τήνο, μια νέα γενιά τοπικών έργων ξανασκέφτεται πώς οι Κυκλάδες θα αντέξουν το καλοκαίρι.",
+        cta: "Συνεχίστε την ανάγνωση",
+        sectionLabel: "Ρεπορτάζ από την Τήνο",
+        sectionTitle: "Πεζούλες που κρατούν τη βροχή",
+        body: [
+          "Για αιώνες, οι ξερολιθιές συγκρατούσαν τη χειμωνιάτικη βροχή αρκετά ώστε να απορροφηθεί από τις πλαγιές. Καθώς η γεωργία υποχωρούσε, οι τοίχοι κατέρρευσαν και το νερό άρχισε να κυλά κατευθείαν στη θάλασσα.",
+          "Σήμερα, εθελοντές και λίγοι αγρότες τις ξαναχτίζουν πέτρα πέτρα. Οι πρώτες μετρήσεις δείχνουν ότι οι αποκατεστημένες πλαγιές κρατούν αισθητά περισσότερη υγρασία στους ξηρούς μήνες.",
+        ],
+        quote: "Η πεζούλα είναι μια μηχανή που κρατά το νερό. Απλώς ξεχάσαμε πώς να τη χρησιμοποιούμε.",
+        quoteSource: "Ελένη Βλάχου, γεωπόνος",
+        itemsTitle: "Περισσότερα από το τεύχος",
+        items: [
+          { meta: "Πολιτισμός · 8 λεπτά", title: "Ο τελευταίος πλωτός κινηματογράφος", text: "Πώς μια οθόνη πάνω σε ένα καράβι κράτησε ζωντανό το σινεμά στα Δωδεκάνησα." },
+          { meta: "Επιστήμη · 12 λεπτά", title: "Ακούγοντας την Ελληνική Τάφρο", text: "Οι σεισμολόγοι χαρτογραφούν ένα από τα πιο ενεργά ρήγματα της Ευρώπης." },
+          { meta: "Γνώμη · 5 λεπτά", title: "Ο τουρισμός χρειάζεται πιο αργή εποχή", text: "Γιατί έχει σημασία να μοιράζονται οι επισκέπτες σε όλη τη χρονιά." },
+        ],
+        caption: "Αποκατεστημένες πεζούλες πάνω από την Καρδιανή της Τήνου. Φωτογραφία: Μ. Ρούσσου.",
+        footer: "Η Επιθεώρηση του Αιγαίου · Τεύχος 112",
+      },
+    },
+  },
+};

@@ -1,0 +1,890 @@
+import type { FontDefinition, FontId, VariableAxis } from "../types";
+import { FONT_IDS } from "./font-ids";
+
+/*
+ * Font registry.
+ *
+ * Subsets, weights, styles and axes are copied from the Google Fonts metadata
+ * that ships with next/font (node_modules/next/dist/compiled/@next/font/dist/google/font-data.json)
+ * and designer credits from fonts.google.com/metadata/fonts. Greek support is derived
+ * from `subsets` — never declared separately.
+ */
+
+const OFL = {
+  name: "SIL Open Font License 1.1",
+  spdx: "OFL-1.1",
+  url: "https://openfontlicense.org",
+} as const;
+
+const AXIS_NAMES: Record<string, string> = {
+  wght: "Weight",
+  wdth: "Width",
+  opsz: "Optical size",
+  slnt: "Slant",
+  SOFT: "Softness",
+  WONK: "Wonky",
+  FLAR: "Flare",
+  VOLM: "Volume",
+  SHRP: "Sharpness",
+  CRSV: "Cursive",
+};
+
+function axis(tag: string, min: number, max: number, def: number): VariableAxis {
+  return { tag, name: AXIS_NAMES[tag] ?? tag, min, max, default: def };
+}
+
+function google(importName: string, family: string): FontDefinition["provider"] {
+  return {
+    kind: "google",
+    importName,
+    specimenUrl: `https://fonts.google.com/specimen/${family.replace(/ /g, "+")}`,
+  };
+}
+
+const STEPS_100_900 = [100, 200, 300, 400, 500, 600, 700, 800, 900];
+
+export const FONTS: Record<FontId, FontDefinition> = {
+  /* ---------------------------------------------------------------- */
+  /* Greek + Latin                                                     */
+  /* ---------------------------------------------------------------- */
+
+  "gfs-didot": {
+    id: "gfs-didot",
+    family: "GFS Didot",
+    provider: google("GFS_Didot", "GFS Didot"),
+    designers: ["Greek Font Society"],
+    category: "serif",
+    classifications: ["didone", "display", "editorial"],
+    subsets: ["greek", "greek-ext", "latin", "vietnamese"],
+    weights: [400],
+    styles: ["normal"],
+    axes: null,
+    loadedAxes: [],
+    license: OFL,
+    roles: ["display", "heading"],
+    industries: ["luxury", "fashion", "culture", "editorial", "hospitality"],
+    traits: ["High contrast", "Vertical stress", "Classical Greek", "Single weight"],
+    summary:
+      "The Didot model that shaped Greek book typography, in a careful Greek Font Society digitisation. Upright, high-contrast and unmistakably Hellenic.",
+    notes: [
+      "Didot-style Greek became the dominant model in Greek printing during the 19th century; this is the reference point many Greek readers associate with books and culture.",
+      "Only one weight. Build hierarchy with size, case and spacing rather than boldness.",
+      "No latin-ext subset: Central European accents (ł, ő, ś …) are not covered. Fine for English, French, Italian, Spanish, German.",
+      "Contrast is high — keep it at 24px and above on screen; pair with a sturdy text face.",
+    ],
+    fallback: "Didot, 'Bodoni 72', Georgia, serif",
+  },
+
+  "gfs-neohellenic": {
+    id: "gfs-neohellenic",
+    family: "GFS Neohellenic",
+    provider: google("GFS_Neohellenic", "GFS Neohellenic"),
+    designers: ["Greek Font Society"],
+    category: "sans-serif",
+    classifications: ["humanist", "editorial"],
+    subsets: ["greek", "greek-ext", "latin", "vietnamese"],
+    weights: [400, 700],
+    styles: ["normal", "italic"],
+    axes: null,
+    loadedAxes: [],
+    license: OFL,
+    roles: ["heading", "body"],
+    industries: ["culture", "education", "editorial", "hospitality"],
+    traits: ["Low contrast", "Scholarly", "Distinctly Greek rhythm", "Polytonic"],
+    summary:
+      "Greek Font Society's revival of the New Hellenic type that Monotype cut in 1927 under Victor Scholderer. Low-contrast, upright and quietly scholarly.",
+    notes: [
+      "Google Fonts classifies it as a sans; in use it reads as a calm, slightly calligraphic hybrid that feels at home in museums and academic publishing.",
+      "The Greek is the lead script — the Latin is a companion drawn to match it. Judge it with Greek text first.",
+      "Two weights with italics. Polytonic coverage (greek-ext) makes it suitable for classical texts.",
+    ],
+    fallback: "'Gill Sans', Optima, 'Segoe UI', sans-serif",
+  },
+
+  commissioner: {
+    id: "commissioner",
+    family: "Commissioner",
+    provider: google("Commissioner", "Commissioner"),
+    designers: ["Kostas Bartsokas"],
+    category: "sans-serif",
+    classifications: ["grotesk", "humanist"],
+    subsets: ["greek", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: STEPS_100_900,
+    styles: ["normal"],
+    axes: [
+      axis("FLAR", 0, 100, 0),
+      axis("VOLM", 0, 100, 0),
+      axis("slnt", -12, 0, 0),
+      axis("wght", 100, 900, 400),
+    ],
+    loadedAxes: ["FLAR", "VOLM"],
+    license: OFL,
+    roles: ["heading", "body", "ui"],
+    industries: ["hospitality", "technology", "culture", "ecommerce", "wellness"],
+    traits: ["Variable flare", "Low contrast", "Warm grotesk", "Greek designer"],
+    summary:
+      "A variable sans by Greek type designer Kostas Bartsokas. Flare and Volume axes move it from a crisp grotesk to a softly flared, more expressive voice.",
+    notes: [
+      "At FLAR 0 it is a clean, slightly narrow grotesk well suited to interfaces; raising Flare adds subtle wedge-like terminals that bring warmth to headings.",
+      "Greek and Latin were designed together, so colour and rhythm match closely across scripts.",
+      "No true italic — a slant axis exists but is not loaded here. Use weight or colour for emphasis.",
+    ],
+    fallback: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+  },
+
+  literata: {
+    id: "literata",
+    family: "Literata",
+    provider: google("Literata", "Literata"),
+    designers: ["TypeTogether"],
+    category: "serif",
+    classifications: ["contemporary-serif", "editorial"],
+    subsets: ["greek", "greek-ext", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: [200, 300, 400, 500, 600, 700, 800, 900],
+    styles: ["normal", "italic"],
+    axes: [axis("opsz", 7, 72, 14), axis("wght", 200, 900, 400)],
+    loadedAxes: ["opsz"],
+    license: OFL,
+    roles: ["body", "heading", "display"],
+    industries: ["editorial", "education", "culture", "healthcare", "professional"],
+    traits: ["Optical sizes", "Robust", "Long-form reading", "Polytonic"],
+    summary:
+      "TypeTogether's reading face, created as the default for Google Play Books. Sturdy, warm and engineered for long reading in Greek and Latin.",
+    notes: [
+      "The optical-size axis (7–72) is applied automatically by browsers via font-optical-sizing: auto — small text gets sturdier serifs, large text more refinement.",
+      "One of the most complete open-source serifs for Greek, including polytonic.",
+      "Works as a single-family system: text at 400, headings at 600–700 with larger optical sizes.",
+    ],
+    fallback: "Georgia, 'Times New Roman', serif",
+  },
+
+  "eb-garamond": {
+    id: "eb-garamond",
+    family: "EB Garamond",
+    provider: google("EB_Garamond", "EB Garamond"),
+    designers: ["Georg Duffner", "Octavio Pardo"],
+    category: "serif",
+    classifications: ["old-style", "editorial"],
+    subsets: ["greek", "greek-ext", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: [400, 500, 600, 700, 800],
+    styles: ["normal", "italic"],
+    axes: [axis("wght", 400, 800, 400)],
+    loadedAxes: [],
+    license: OFL,
+    roles: ["body", "heading", "display"],
+    industries: ["culture", "luxury", "professional", "education", "editorial"],
+    traits: ["Renaissance", "Old-style figures", "Small caps", "Polytonic"],
+    summary:
+      "An open-source Garamond based on the 1592 Egenolff–Berner specimen. Literary and refined, with a matching polytonic Greek.",
+    notes: [
+      "Rich OpenType: small caps (smcp), old-style figures (onum), ligatures. Use them — they are what make Garamond feel like Garamond.",
+      "Small x-height: set body text 1–2px larger than you would a modern serif.",
+      "Pairs naturally with humanist sans faces for captions and interface text.",
+    ],
+    fallback: "Garamond, 'Times New Roman', serif",
+  },
+
+  "noto-serif-display": {
+    id: "noto-serif-display",
+    family: "Noto Serif Display",
+    provider: google("Noto_Serif_Display", "Noto Serif Display"),
+    designers: ["Google"],
+    category: "serif",
+    classifications: ["transitional", "display", "editorial"],
+    subsets: ["greek", "greek-ext", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: STEPS_100_900,
+    styles: ["normal", "italic"],
+    axes: [axis("wdth", 62.5, 100, 100), axis("wght", 100, 900, 400)],
+    loadedAxes: ["wdth"],
+    license: OFL,
+    roles: ["display", "heading"],
+    industries: ["editorial", "fashion", "luxury", "culture"],
+    traits: ["High contrast", "Width axis", "Headline serif", "Polytonic"],
+    summary:
+      "The display cut of Noto Serif: higher contrast, tighter fit and a width axis down to 62.5% — a reliable bilingual headline serif.",
+    notes: [
+      "The width axis is the secret weapon: condensed widths (70–80) give magazine-style headlines in Greek, whose words run longer than English.",
+      "The best Greek-capable substitute for condensed Latin display serifs such as Instrument Serif.",
+      "Drawn for large sizes; use Noto Serif or another text face below ~24px.",
+    ],
+    fallback: "Georgia, 'Times New Roman', serif",
+  },
+
+  inter: {
+    id: "inter",
+    family: "Inter",
+    provider: google("Inter", "Inter"),
+    designers: ["Rasmus Andersson"],
+    category: "sans-serif",
+    classifications: ["neo-grotesk"],
+    subsets: ["greek", "greek-ext", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: STEPS_100_900,
+    styles: ["normal", "italic"],
+    axes: [axis("opsz", 14, 32, 14), axis("wght", 100, 900, 400)],
+    loadedAxes: ["opsz"],
+    license: OFL,
+    roles: ["ui", "body", "heading"],
+    industries: ["technology", "finance", "ecommerce", "healthcare", "professional"],
+    traits: ["Tall x-height", "Tabular figures", "Interface workhorse", "Polytonic"],
+    summary:
+      "A screen-first neo-grotesk with a tall x-height and deep OpenType support. The display optical size tightens spacing automatically for headlines.",
+    notes: [
+      "Use tabular figures (font-variant-numeric: tabular-nums) for prices and data tables.",
+      "Optical sizes 14–32 are applied automatically; large headings become tighter and more refined without manual tracking.",
+      "Neutral by design — let a characterful display face carry personality.",
+    ],
+    fallback: "system-ui, 'Segoe UI', Roboto, Arial, sans-serif",
+  },
+
+  manrope: {
+    id: "manrope",
+    family: "Manrope",
+    provider: google("Manrope", "Manrope"),
+    designers: ["Mikhail Sharanda"],
+    category: "sans-serif",
+    classifications: ["geometric", "grotesk"],
+    subsets: ["greek", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: [200, 300, 400, 500, 600, 700, 800],
+    styles: ["normal"],
+    axes: [axis("wght", 200, 800, 400)],
+    loadedAxes: [],
+    license: OFL,
+    roles: ["heading", "ui", "body"],
+    industries: ["technology", "healthcare", "finance", "ecommerce", "architecture"],
+    traits: ["Geometric-grotesk hybrid", "Friendly", "Semi-condensed", "No italic"],
+    summary:
+      "A modern sans mixing geometric construction with grotesk proportions. Clear and approachable — a dependable Greek-capable alternative to DM Sans.",
+    notes: [
+      "Semibold (600) headings feel confident without shouting; 400–500 for interface text.",
+      "No italic. Plan emphasis with weight.",
+    ],
+    fallback: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+  },
+
+  syne: {
+    id: "syne",
+    family: "Syne",
+    provider: google("Syne", "Syne"),
+    designers: ["Bonjour Monde", "Lucas Descroix", "George Triantafyllakos"],
+    category: "sans-serif",
+    classifications: ["display", "grotesk"],
+    subsets: ["greek", "latin", "latin-ext"],
+    weights: [400, 500, 600, 700, 800],
+    styles: ["normal"],
+    axes: [axis("wght", 400, 800, 400)],
+    loadedAxes: [],
+    license: OFL,
+    roles: ["display", "heading"],
+    industries: ["culture", "fashion", "technology", "ecommerce"],
+    traits: ["Expands with weight", "Art-directed", "Idiosyncratic", "Greek by a Greek designer"],
+    summary:
+      "Made for the Synesthésies art centre in Paris, with Greek by George Triantafyllakos. Letters widen dramatically as weight increases — bold weights become wide, graphic shapes.",
+    notes: [
+      "Weight and width are linked: 400 is compact, 800 is very wide. Choose the weight for its silhouette as much as its colour.",
+      "A display face. Pair with a quiet text sans or serif.",
+    ],
+    fallback: "'Arial Black', 'Helvetica Neue', Arial, sans-serif",
+  },
+
+  piazzolla: {
+    id: "piazzolla",
+    family: "Piazzolla",
+    provider: google("Piazzolla", "Piazzolla"),
+    designers: ["Juan Pablo del Peral", "HT Fonts"],
+    category: "serif",
+    classifications: ["contemporary-serif", "editorial"],
+    subsets: ["greek", "greek-ext", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: STEPS_100_900,
+    styles: ["normal", "italic"],
+    axes: [axis("opsz", 8, 30, 14), axis("wght", 100, 900, 400)],
+    loadedAxes: ["opsz"],
+    license: OFL,
+    roles: ["body", "heading", "display"],
+    industries: ["editorial", "culture", "hospitality", "education"],
+    traits: ["Compact", "Sharp details", "Optical sizes", "Polytonic"],
+    summary:
+      "A compact, sharply detailed serif from Huerta Tipográfica, designed for economical press setting. Strong personality at display sizes, efficient in text.",
+    notes: [
+      "Narrow proportions fit more Greek per line — useful because Greek runs longer than English.",
+      "Optical sizes 8–30: tiny captions stay robust, headings reveal the angular detailing.",
+    ],
+    fallback: "Georgia, 'Times New Roman', serif",
+  },
+
+  "source-serif-4": {
+    id: "source-serif-4",
+    family: "Source Serif 4",
+    provider: google("Source_Serif_4", "Source Serif 4"),
+    designers: ["Frank Grießhammer"],
+    category: "serif",
+    classifications: ["transitional", "editorial"],
+    subsets: ["greek", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: [200, 300, 400, 500, 600, 700, 800, 900],
+    styles: ["normal", "italic"],
+    axes: [axis("opsz", 8, 60, 14), axis("wght", 200, 900, 400)],
+    loadedAxes: ["opsz"],
+    license: OFL,
+    roles: ["body", "heading"],
+    industries: ["editorial", "professional", "education", "finance", "healthcare"],
+    traits: ["Fournier tradition", "Optical sizes", "Even texture", "Trustworthy"],
+    summary:
+      "Adobe's transitional serif in the Fournier tradition, with optical sizes from caption to display. Calm, credible and highly readable.",
+    notes: [
+      "Excellent for reports, documentation and long reads that need authority without stiffness.",
+      "Monotonic Greek only (no greek-ext) — fine for contemporary Greek, not for classical texts.",
+    ],
+    fallback: "Georgia, 'Times New Roman', serif",
+  },
+
+  "ibm-plex-sans": {
+    id: "ibm-plex-sans",
+    family: "IBM Plex Sans",
+    provider: google("IBM_Plex_Sans", "IBM Plex Sans"),
+    designers: ["Mike Abbink", "Bold Monday"],
+    category: "sans-serif",
+    classifications: ["grotesk", "technical"],
+    subsets: ["greek", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: [100, 200, 300, 400, 500, 600, 700],
+    styles: ["normal", "italic"],
+    axes: [axis("wdth", 75, 100, 100), axis("wght", 100, 700, 400)],
+    loadedAxes: ["wdth"],
+    license: OFL,
+    roles: ["body", "ui", "heading"],
+    industries: ["technology", "finance", "architecture", "professional", "ecommerce"],
+    traits: ["Engineered", "Distinctive details", "Width axis", "Neutral-with-character"],
+    summary:
+      "IBM's corporate grotesque: rational and engineered, with idiosyncratic cuts that keep it from blandness. Variable width down to 75% for dense UI.",
+    notes: [
+      "The Google Fonts variable version includes Greek. IBM Plex Mono on Google Fonts does not — use JetBrains Mono for Greek-capable monospace.",
+      "Condensed widths (wdth 75–85) are excellent for data-heavy tables and navigation.",
+    ],
+    fallback: "'Helvetica Neue', Arial, sans-serif",
+  },
+
+  geologica: {
+    id: "geologica",
+    family: "Geologica",
+    provider: google("Geologica", "Geologica"),
+    designers: ["Monokrom", "Sindre Bremnes", "Frode Helland"],
+    category: "sans-serif",
+    classifications: ["geometric", "technical"],
+    subsets: ["greek", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: STEPS_100_900,
+    styles: ["normal"],
+    axes: [
+      axis("CRSV", 0, 1, 0),
+      axis("SHRP", 0, 100, 0),
+      axis("slnt", -12, 0, 0),
+      axis("wght", 100, 900, 400),
+    ],
+    loadedAxes: ["SHRP"],
+    license: OFL,
+    roles: ["display", "heading", "body", "ui"],
+    industries: ["architecture", "technology", "professional", "finance"],
+    traits: ["Constructed", "Sharpness axis", "Even colour", "Wide weight range"],
+    summary:
+      "A constructed sans from Norwegian foundry Monokrom. Its Sharpness axis cuts the corners of strokes into crisp facets — useful for architectural, engineered identities.",
+    notes: [
+      "Light weights at large sizes feel like architectural lettering; 400–500 sets clean, open text.",
+      "SHRP is loaded in this library: try 50–100 on headings for a precise, cut-out finish.",
+    ],
+    fallback: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+  },
+
+  "sofia-sans": {
+    id: "sofia-sans",
+    family: "Sofia Sans",
+    provider: google("Sofia_Sans", "Sofia Sans"),
+    designers: ["Lettersoup", "Botio Nikoltchev", "Ani Petrova"],
+    category: "sans-serif",
+    classifications: ["grotesk", "humanist"],
+    subsets: ["greek", "latin", "latin-ext", "cyrillic", "cyrillic-ext"],
+    weights: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+    styles: ["normal", "italic"],
+    axes: [axis("wght", 1, 1000, 400)],
+    loadedAxes: [],
+    license: OFL,
+    roles: ["ui", "body", "caption", "heading"],
+    industries: ["culture", "technology", "ecommerce", "education"],
+    traits: ["Compact", "Hairline to black", "Space-efficient", "Large family"],
+    summary:
+      "A compact sans from Bulgarian foundry Lettersoup, spanning weight 1 to 1000. Economical widths make it ideal for captions, navigation and dense interfaces.",
+    notes: [
+      "Separate Semi Condensed, Condensed and Extra Condensed families exist on Google Fonts for tighter layouts.",
+      "Its narrow fit balances the longer word lengths of Greek in labels and buttons.",
+    ],
+    fallback: "'Arial Narrow', 'Helvetica Neue', Arial, sans-serif",
+  },
+
+  ysabeau: {
+    id: "ysabeau",
+    family: "Ysabeau",
+    provider: google("Ysabeau", "Ysabeau"),
+    designers: ["Christian Thalmann"],
+    category: "sans-serif",
+    classifications: ["humanist"],
+    subsets: ["greek", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese", "math", "symbols"],
+    weights: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+    styles: ["normal", "italic"],
+    axes: [axis("wght", 1, 1000, 400)],
+    loadedAxes: [],
+    license: OFL,
+    roles: ["body", "ui", "heading"],
+    industries: ["luxury", "fashion", "wellness", "hospitality", "culture"],
+    traits: ["Garamond-inspired", "Elegant", "Calligraphic details", "True italic"],
+    summary:
+      "Christian Thalmann's Garamond-inspired sans: humanist proportions, lively details and a true italic. Elegant without being precious.",
+    notes: [
+      "Sits beautifully beside high-contrast serifs — it shares their Renaissance proportions.",
+      "Ysabeau Office (more conventional figures and forms) and Ysabeau Infant (single-storey a/g) are sibling families.",
+    ],
+    fallback: "Optima, Candara, 'Segoe UI', sans-serif",
+  },
+
+  alegreya: {
+    id: "alegreya",
+    family: "Alegreya",
+    provider: google("Alegreya", "Alegreya"),
+    designers: ["Juan Pablo del Peral", "HT Fonts"],
+    category: "serif",
+    classifications: ["calligraphic", "old-style", "editorial"],
+    subsets: ["greek", "greek-ext", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: [400, 500, 600, 700, 800, 900],
+    styles: ["normal", "italic"],
+    axes: [axis("wght", 400, 900, 400)],
+    loadedAxes: [],
+    license: OFL,
+    roles: ["body", "heading", "display"],
+    industries: ["hospitality", "culture", "education", "editorial", "wellness"],
+    traits: ["Calligraphic rhythm", "Warm", "Expressive italic", "Polytonic"],
+    summary:
+      "A calligraphic serif designed for literature, with dynamic rhythm and a lively italic. Warm and human — at home on a menu as in a novel.",
+    notes: [
+      "The italic is a display asset: large Alegreya italic headings carry real personality in both Greek and Latin.",
+      "Part of a super-family with Alegreya Sans; both support Greek.",
+    ],
+    fallback: "Georgia, 'Palatino Linotype', serif",
+  },
+
+  "fira-sans": {
+    id: "fira-sans",
+    family: "Fira Sans",
+    provider: google("Fira_Sans", "Fira Sans"),
+    designers: ["Carrois Apostrophe"],
+    category: "sans-serif",
+    classifications: ["humanist"],
+    subsets: ["greek", "greek-ext", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: STEPS_100_900,
+    styles: ["normal", "italic"],
+    axes: null,
+    loadedAxes: [],
+    license: OFL,
+    roles: ["body", "ui", "caption"],
+    industries: ["healthcare", "education", "technology", "professional", "ecommerce"],
+    traits: ["Highly legible", "Open apertures", "Static family", "Polytonic"],
+    summary:
+      "The humanist sans commissioned by Mozilla for Firefox OS, built to stay legible on small, imperfect screens. Clear, friendly and thoroughly multilingual.",
+    notes: [
+      "Static family: load only the weights you use (each weight × style × subset is a separate file).",
+      "Distinct I / l / 1 shapes and open apertures make it a strong choice for healthcare and public information.",
+    ],
+    fallback: "'Segoe UI', Tahoma, Arial, sans-serif",
+  },
+
+  "stix-two-text": {
+    id: "stix-two-text",
+    family: "STIX Two Text",
+    provider: google("STIX_Two_Text", "STIX Two Text"),
+    designers: ["Tiro Typeworks", "Ross Mills", "John Hudson", "Paul Hanslow"],
+    category: "serif",
+    classifications: ["transitional", "editorial"],
+    subsets: ["greek", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: [400, 500, 600, 700],
+    styles: ["normal", "italic"],
+    axes: [axis("wght", 400, 700, 400)],
+    loadedAxes: [],
+    license: OFL,
+    roles: ["body"],
+    industries: ["education", "healthcare", "professional", "editorial"],
+    traits: ["Scientific", "Times-adjacent", "Sturdy", "Math companion"],
+    summary:
+      "Created for the STI Pub consortium of scientific publishers by Tiro Typeworks. A sturdier, more refined cousin of Times, with Greek ready for academic text.",
+    notes: [
+      "STIX Two Math (separate family) matches it for formulae.",
+      "Ideal when authority and density matter more than personality: papers, clinical guidance, legal text.",
+    ],
+    fallback: "'Times New Roman', Times, serif",
+  },
+
+  "brygada-1918": {
+    id: "brygada-1918",
+    family: "Brygada 1918",
+    provider: google("Brygada_1918", "Brygada 1918"),
+    designers: ["Capitalics", "Mateusz Machalski", "Borys Kosmynka", "Ania Wieluńska", "Przemysław Hoffer"],
+    category: "serif",
+    classifications: ["transitional", "old-style"],
+    subsets: ["greek", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: [400, 500, 600, 700],
+    styles: ["normal", "italic"],
+    axes: [axis("wght", 400, 700, 400)],
+    loadedAxes: [],
+    license: OFL,
+    roles: ["body", "heading"],
+    industries: ["culture", "hospitality", "editorial", "professional"],
+    traits: ["Revival", "Characterful details", "Bookish", "Lesser-known"],
+    summary:
+      "A Polish revival of an early-20th-century book face by the Capitalics team. Bookish and slightly eccentric, with a Greek that keeps the same warmth.",
+    notes: [
+      "A distinctive alternative to the usual Garamond / Caslon choices for heritage brands.",
+      "Text sizes from 17px upwards show its character best.",
+    ],
+    fallback: "Georgia, 'Times New Roman', serif",
+  },
+
+  "advent-pro": {
+    id: "advent-pro",
+    family: "Advent Pro",
+    provider: google("Advent_Pro", "Advent Pro"),
+    designers: ["VivaRado"],
+    category: "sans-serif",
+    classifications: ["technical", "display"],
+    subsets: ["greek", "latin", "latin-ext", "cyrillic", "cyrillic-ext"],
+    weights: STEPS_100_900,
+    styles: ["normal", "italic"],
+    axes: [axis("wdth", 100, 200, 100), axis("wght", 100, 900, 400)],
+    loadedAxes: ["wdth"],
+    license: OFL,
+    roles: ["display", "heading", "ui"],
+    industries: ["technology", "architecture", "ecommerce"],
+    traits: ["Angular", "Width axis to 200%", "Technical", "Lesser-known"],
+    summary:
+      "An angular, technical sans from VivaRado. The width axis stretches it from compact to fully extended — a Greek-capable option for engineered, futurist identities.",
+    notes: [
+      "Use extended widths (150–200) sparingly, for short labels and numerals.",
+      "Not a long-form text face; pair with a neutral sans for paragraphs.",
+    ],
+    fallback: "'Arial Narrow', Arial, sans-serif",
+  },
+
+  "jetbrains-mono": {
+    id: "jetbrains-mono",
+    family: "JetBrains Mono",
+    provider: google("JetBrains_Mono", "JetBrains Mono"),
+    designers: ["JetBrains", "Philipp Nurullin", "Konstantin Bulenkov"],
+    category: "monospace",
+    classifications: ["monospace", "technical"],
+    subsets: ["greek", "latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: [100, 200, 300, 400, 500, 600, 700, 800],
+    styles: ["normal", "italic"],
+    axes: [axis("wght", 100, 800, 400)],
+    loadedAxes: [],
+    license: OFL,
+    roles: ["code", "caption", "ui"],
+    industries: ["technology", "architecture", "finance"],
+    traits: ["Tall x-height", "Code ligatures", "Greek-capable mono", "Calm"],
+    summary:
+      "A monospace from JetBrains with an increased x-height and simplified forms to reduce reading friction. One of few open monospaces with Greek.",
+    notes: [
+      "Code ligatures are on by default; disable with font-variant-ligatures: none for non-code labels.",
+      "Excellent for index numbers, specifications and technical captions.",
+    ],
+    fallback: "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+  },
+
+  /* ---------------------------------------------------------------- */
+  /* Latin only                                                        */
+  /* ---------------------------------------------------------------- */
+
+  fraunces: {
+    id: "fraunces",
+    family: "Fraunces",
+    provider: google("Fraunces", "Fraunces"),
+    designers: ["Undercase Type", "Phaedra Charles", "Flavia Zimbardi"],
+    category: "serif",
+    classifications: ["display", "old-style"],
+    subsets: ["latin", "latin-ext", "vietnamese"],
+    weights: STEPS_100_900,
+    styles: ["normal", "italic"],
+    axes: [
+      axis("SOFT", 0, 100, 0),
+      axis("WONK", 0, 1, 0),
+      axis("opsz", 9, 144, 14),
+      axis("wght", 100, 900, 400),
+    ],
+    loadedAxes: ["opsz", "SOFT", "WONK"],
+    license: OFL,
+    roles: ["display", "heading"],
+    industries: ["hospitality", "wellness", "ecommerce", "editorial"],
+    traits: ["Soft serif", "Wonky details", "Optical sizes to 144", "Characterful"],
+    summary:
+      "A 'soft-serve' old-style display serif inspired by early-20th-century faces such as Windsor, Souvenir and Cooper. Softness and Wonky axes tune its mood.",
+    notes: [
+      "SOFT rounds the terminals; WONK swaps in leaning, quirky forms. Optical sizes up to 144 keep huge headings crisp.",
+      "No Greek. For bilingual work set Greek in Literata or Piazzolla via the font stack.",
+    ],
+    greekAlternatives: [
+      { font: "literata", reason: "Warm optical-sized serif; its larger opsz settings echo Fraunces' softness." },
+      { font: "piazzolla", reason: "Compact serif with expressive display detail at large optical sizes." },
+    ],
+    fallback: "Georgia, 'Times New Roman', serif",
+  },
+
+  "playfair-display": {
+    id: "playfair-display",
+    family: "Playfair Display",
+    provider: google("Playfair_Display", "Playfair Display"),
+    designers: ["Claus Eggers Sørensen"],
+    category: "serif",
+    classifications: ["transitional", "didone", "display"],
+    subsets: ["latin", "latin-ext", "cyrillic", "vietnamese"],
+    weights: [400, 500, 600, 700, 800, 900],
+    styles: ["normal", "italic"],
+    axes: [axis("wght", 400, 900, 400)],
+    loadedAxes: [],
+    license: OFL,
+    roles: ["display", "heading"],
+    industries: ["fashion", "luxury", "editorial", "hospitality"],
+    traits: ["High contrast", "Large x-height", "Ubiquitous", "Strong italic"],
+    summary:
+      "A high-contrast display serif in the late-18th-century tradition. Familiar and dependable — use it with intent so it does not read as a default.",
+    notes: [
+      "Very widely used; differentiate through italic, tracking and composition.",
+      "No Greek. GFS Didot or Noto Serif Display carry the same contrast into Greek.",
+    ],
+    greekAlternatives: [
+      { font: "noto-serif-display", reason: "Comparable contrast and weight range, with italics." },
+      { font: "gfs-didot", reason: "The authentic Greek Didot model for a more classical voice." },
+    ],
+    fallback: "Didot, Georgia, serif",
+  },
+
+  "cormorant-garamond": {
+    id: "cormorant-garamond",
+    family: "Cormorant Garamond",
+    provider: google("Cormorant_Garamond", "Cormorant Garamond"),
+    designers: ["Christian Thalmann"],
+    category: "serif",
+    classifications: ["old-style", "display"],
+    subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext", "vietnamese"],
+    weights: [300, 400, 500, 600, 700],
+    styles: ["normal", "italic"],
+    axes: [axis("wght", 300, 700, 400)],
+    loadedAxes: [],
+    license: OFL,
+    roles: ["display", "heading"],
+    industries: ["luxury", "fashion", "wellness", "hospitality"],
+    traits: ["Display Garamond", "Delicate", "Small x-height", "Refined italic"],
+    summary:
+      "Christian Thalmann's display Garamond: sharp, delicate and luxurious at large sizes, with a beautiful italic.",
+    notes: [
+      "Drawn for display — the fine details break down below ~20px on screen.",
+      "No Greek. EB Garamond provides a matching Garamond voice with polytonic Greek.",
+    ],
+    greekAlternatives: [
+      { font: "eb-garamond", reason: "Same Garamond lineage with full Greek, sturdier at text sizes." },
+    ],
+    fallback: "Garamond, 'Times New Roman', serif",
+  },
+
+  "instrument-serif": {
+    id: "instrument-serif",
+    family: "Instrument Serif",
+    provider: google("Instrument_Serif", "Instrument Serif"),
+    designers: ["Rodrigo Fuenzalida", "Jordan Egstad"],
+    category: "serif",
+    classifications: ["display", "editorial"],
+    subsets: ["latin", "latin-ext"],
+    weights: [400],
+    styles: ["normal", "italic"],
+    axes: null,
+    loadedAxes: [],
+    license: OFL,
+    roles: ["display", "heading"],
+    industries: ["technology", "editorial", "fashion", "culture"],
+    traits: ["Condensed", "Contemporary", "Single weight", "Elegant italic"],
+    summary:
+      "A condensed contemporary display serif with a crisp italic. Editorial and quietly confident; a favourite of modern product sites.",
+    notes: [
+      "Single weight — hierarchy comes from size and italics.",
+      "No Greek. Noto Serif Display at width 70–80 is a close Greek-capable match.",
+    ],
+    greekAlternatives: [
+      { font: "noto-serif-display", reason: "Use the width axis (≈75) to match the condensed silhouette." },
+    ],
+    fallback: "Georgia, 'Times New Roman', serif",
+  },
+
+  "bodoni-moda": {
+    id: "bodoni-moda",
+    family: "Bodoni Moda",
+    provider: google("Bodoni_Moda", "Bodoni Moda"),
+    designers: ["Owen Earl"],
+    category: "serif",
+    classifications: ["didone", "display"],
+    subsets: ["latin", "latin-ext", "math", "symbols"],
+    weights: [400, 500, 600, 700, 800, 900],
+    styles: ["normal", "italic"],
+    axes: [axis("opsz", 6, 96, 11), axis("wght", 400, 900, 400)],
+    loadedAxes: ["opsz"],
+    license: OFL,
+    roles: ["display", "heading"],
+    industries: ["fashion", "luxury", "culture"],
+    traits: ["Didone", "Optical sizes", "Razor hairlines", "Fashion"],
+    summary:
+      "A Bodoni with optical sizes, so the hairlines stay razor-thin at display sizes and sturdy in smaller text.",
+    notes: [
+      "Optical sizing is automatic in browsers; ensure font-optical-sizing is not disabled.",
+      "No Greek. GFS Didot is the natural Greek partner.",
+    ],
+    greekAlternatives: [
+      { font: "gfs-didot", reason: "The Greek Didot tradition shares Bodoni's contrast and vertical stress." },
+    ],
+    fallback: "'Bodoni 72', Didot, Georgia, serif",
+  },
+
+  newsreader: {
+    id: "newsreader",
+    family: "Newsreader",
+    provider: google("Newsreader", "Newsreader"),
+    designers: ["Production Type"],
+    category: "serif",
+    classifications: ["transitional", "editorial"],
+    subsets: ["latin", "latin-ext", "vietnamese"],
+    weights: [200, 300, 400, 500, 600, 700, 800],
+    styles: ["normal", "italic"],
+    axes: [axis("opsz", 6, 72, 16), axis("wght", 200, 800, 400)],
+    loadedAxes: ["opsz"],
+    license: OFL,
+    roles: ["body", "heading", "display"],
+    industries: ["editorial", "professional", "education"],
+    traits: ["Newsroom serif", "Optical sizes", "Dense", "Contemporary"],
+    summary:
+      "Production Type's serif for on-screen news: compact, legible and newsy, with optical sizes from captions to headlines.",
+    notes: [
+      "A complete editorial family on its own: headline, deck and text from one source.",
+      "No Greek. Literata and Source Serif 4 offer the same editorial tone with Greek.",
+    ],
+    greekAlternatives: [
+      { font: "literata", reason: "Comparable optical-size range and editorial texture." },
+      { font: "source-serif-4", reason: "Transitional structure with a similar newsroom sobriety." },
+    ],
+    fallback: "Georgia, 'Times New Roman', serif",
+  },
+
+  "space-grotesk": {
+    id: "space-grotesk",
+    family: "Space Grotesk",
+    provider: google("Space_Grotesk", "Space Grotesk"),
+    designers: ["Florian Karsten"],
+    category: "sans-serif",
+    classifications: ["grotesk", "technical"],
+    subsets: ["latin", "latin-ext", "vietnamese"],
+    weights: [300, 400, 500, 600, 700],
+    styles: ["normal"],
+    axes: [axis("wght", 300, 700, 400)],
+    loadedAxes: [],
+    license: OFL,
+    roles: ["display", "heading", "ui"],
+    industries: ["technology", "finance", "culture"],
+    traits: ["Derived from a mono", "Quirky details", "Technical", "No italic"],
+    summary:
+      "A proportional grotesk derived from Colophon's Space Mono, keeping its quirky, technical details. Popular in tech and Web3 branding.",
+    notes: [
+      "Distinctive at headline sizes; fatiguing in long text.",
+      "No Greek. Geologica or Manrope carry a similar technical voice in Greek.",
+    ],
+    greekAlternatives: [
+      { font: "geologica", reason: "Constructed technical sans; SHRP adds a comparable edge." },
+      { font: "manrope", reason: "Modern grotesk proportions with a clean Greek." },
+    ],
+    fallback: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+  },
+
+  "dm-sans": {
+    id: "dm-sans",
+    family: "DM Sans",
+    provider: google("DM_Sans", "DM Sans"),
+    designers: ["Colophon Foundry"],
+    category: "sans-serif",
+    classifications: ["geometric"],
+    subsets: ["latin", "latin-ext"],
+    weights: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+    styles: ["normal", "italic"],
+    axes: [axis("opsz", 9, 40, 14), axis("wght", 100, 1000, 400)],
+    loadedAxes: ["opsz"],
+    license: OFL,
+    roles: ["body", "ui", "heading"],
+    industries: ["ecommerce", "technology", "wellness", "hospitality"],
+    traits: ["Low contrast", "Geometric", "Optical sizes", "Friendly"],
+    summary:
+      "A low-contrast geometric sans by Colophon, with optical sizes that tighten headlines and open up small text.",
+    notes: [
+      "A clean product-site workhorse.",
+      "No Greek. Manrope is the closest Greek-capable geometric companion.",
+    ],
+    greekAlternatives: [
+      { font: "manrope", reason: "Geometric-grotesk construction with similar openness and colour." },
+    ],
+    fallback: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+  },
+
+  "bricolage-grotesque": {
+    id: "bricolage-grotesque",
+    family: "Bricolage Grotesque",
+    provider: google("Bricolage_Grotesque", "Bricolage Grotesque"),
+    designers: ["Mathieu Triay"],
+    category: "sans-serif",
+    classifications: ["grotesk", "display"],
+    subsets: ["latin", "latin-ext", "vietnamese"],
+    weights: [200, 300, 400, 500, 600, 700, 800],
+    styles: ["normal"],
+    axes: [axis("opsz", 12, 96, 14), axis("wdth", 75, 100, 100), axis("wght", 200, 800, 400)],
+    loadedAxes: ["opsz", "wdth"],
+    license: OFL,
+    roles: ["display", "heading"],
+    industries: ["ecommerce", "technology", "culture", "hospitality"],
+    traits: ["Ink-trap details", "Width axis", "Optical sizes", "Playful"],
+    summary:
+      "A grotesk with ink-trap-inspired details that intensify at large optical sizes. Playful, contemporary and full of character at headline scale.",
+    notes: [
+      "Condensed widths (75–85) at heavy weights give punchy commerce headlines.",
+      "No Greek. Commissioner (with Flare) or Syne bring comparable character to Greek.",
+    ],
+    greekAlternatives: [
+      { font: "commissioner", reason: "Raise FLAR for a characterful, idiosyncratic Greek grotesk." },
+      { font: "syne", reason: "Equally expressive at display sizes, with a Greek by a Greek designer." },
+    ],
+    fallback: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+  },
+
+  archivo: {
+    id: "archivo",
+    family: "Archivo",
+    provider: google("Archivo", "Archivo"),
+    designers: ["Omnibus-Type"],
+    category: "sans-serif",
+    classifications: ["grotesk"],
+    subsets: ["latin", "latin-ext", "vietnamese"],
+    weights: STEPS_100_900,
+    styles: ["normal", "italic"],
+    axes: [axis("wdth", 62, 125, 100), axis("wght", 100, 900, 400)],
+    loadedAxes: ["wdth"],
+    license: OFL,
+    roles: ["display", "heading", "body", "ui"],
+    industries: ["architecture", "ecommerce", "technology", "editorial"],
+    traits: ["Width 62–125", "Grotesk", "Versatile", "Strong at extremes"],
+    summary:
+      "An Argentinian grotesk from Omnibus-Type with a wide width axis (62–125) and full weight range — from compressed posters to expanded wordmarks.",
+    notes: [
+      "Compressed heavy widths make strong architectural and poster headlines.",
+      "No Greek. Sofia Sans (and its condensed siblings) or IBM Plex Sans (wdth 75–100) cover Greek.",
+    ],
+    greekAlternatives: [
+      { font: "sofia-sans", reason: "Compact grotesk; condensed sibling families for narrow headlines." },
+      { font: "ibm-plex-sans", reason: "Width axis to 75% with a sober grotesk structure." },
+    ],
+    fallback: "'Helvetica Neue', Arial, sans-serif",
+  },
+};
+
+export const FONT_LIST: FontDefinition[] = FONT_IDS.map((id) => FONTS[id]);

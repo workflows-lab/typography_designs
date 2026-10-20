@@ -1,0 +1,267 @@
+/* Script support ------------------------------------------------------- */
+
+.scripts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.85rem;
+  font-family: var(--lab-mono);
+  font-size: var(--lab-text-xs);
+}
+
+.script {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--lab-ink);
+}
+
+.script[data-supported="false"] {
+  color: var(--lab-ink-3);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.scriptDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--lab-ink);
+}
+
+.script[data-supported="false"] .scriptDot {
+  background: transparent;
+  border: 1px solid var(--lab-ink-3);
+}
+
+.script:nth-child(3)[data-supported="true"] .scriptDot,
+.script:nth-child(4)[data-supported="true"] .scriptDot {
+  background: var(--lab-accent);
+}
+
+/* Substitution note ---------------------------------------------------- */
+
+.substitution {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  margin-top: var(--lab-space-4);
+  padding: 0.5rem 0.75rem;
+  border-left: 2px solid var(--lab-accent);
+  background: color-mix(in srgb, var(--lab-accent) 7%, transparent);
+  font-family: var(--lab-sans);
+  font-size: var(--lab-text-sm);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.4;
+  color: var(--lab-ink-2);
+  max-width: 64ch;
+}
+
+.substitutionMark {
+  color: var(--lab-accent);
+}
+
+/* Weight ladder -------------------------------------------------------- */
+
+.ladder {
+  border-top: 1px solid var(--lab-rule);
+}
+
+.ladderRow {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--lab-space-5);
+  align-items: baseline;
+  padding-block: var(--lab-space-3);
+  border-bottom: 1px solid var(--lab-rule);
+}
+
+.ladderMeta {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--lab-mono);
+  font-size: var(--lab-text-xs);
+  color: var(--lab-ink-3);
+}
+
+.ladderSample {
+  font-family: var(--specimen-family);
+  font-weight: var(--specimen-weight);
+  font-size: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.ladderSample[data-unsupported] {
+  color: var(--lab-ink-3);
+  font-family: var(--lab-mono);
+  font-size: var(--lab-text-sm);
+}
+
+.ladderItalic {
+  font-style: italic;
+  color: var(--lab-ink-2);
+}
+
+@media (max-width: 48rem) {
+  .ladderRow {
+    grid-template-columns: 1fr;
+    gap: var(--lab-space-1);
+  }
+  .ladderMeta {
+    flex-direction: row;
+    gap: var(--lab-space-2);
+  }
+}
+
+/* Glyphs --------------------------------------------------------------- */
+
+.glyphs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: var(--lab-space-6) var(--lab-space-5);
+}
+
+.glyphGroup {
+  display: grid;
+  gap: var(--lab-space-2);
+  align-content: start;
+  border-top: 1px solid var(--lab-rule);
+  padding-top: var(--lab-space-3);
+}
+
+.glyphLabel {
+  font-family: var(--lab-mono);
+  font-size: var(--lab-text-xs);
+  font-weight: 400;
+  color: var(--lab-ink-3);
+}
+
+.glyphRow {
+  font-family: var(--specimen-family);
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  line-height: 1.35;
+  letter-spacing: 0.06em;
+  overflow-wrap: anywhere;
+}
+
+.glyphMissing {
+  font-family: var(--lab-mono);
+  font-size: var(--lab-text-sm);
+  color: var(--lab-ink-3);
+  padding-block: 0.5rem;
+}
+
+/* Type tester ---------------------------------------------------------- */
+
+.tester {
+  display: grid;
+  grid-template-columns: minmax(16rem, 20rem) minmax(0, 1fr);
+  gap: var(--lab-space-6);
+  align-items: start;
+}
+
+.testerControls {
+  display: grid;
+  gap: var(--lab-space-4);
+  position: sticky;
+  top: calc(var(--lab-header-h) + var(--lab-space-4));
+}
+
+.testerRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lab-space-3);
+}
+
+.muted {
+  font-size: var(--lab-text-sm);
+  color: var(--lab-ink-3);
+}
+
+.textButton {
+  background: none;
+  border: 0;
+  font-size: var(--lab-text-sm);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  color: var(--lab-ink-2);
+}
+
+.testerStage {
+  min-height: 24rem;
+  padding: clamp(1rem, 3vw, 3rem);
+  background: var(--lab-paper-raised);
+  border: 1px solid var(--lab-rule);
+  color: var(--lab-ink);
+  overflow: hidden;
+  transition: background-color 200ms var(--lab-ease), color 200ms var(--lab-ease);
+}
+
+.testerStage[data-tone="dark"] {
+  background: #141413;
+  color: #f2f0eb;
+  border-color: #141413;
+}
+
+.testerLine,
+.testerParagraph,
+.waterfallText {
+  font-family: var(--specimen-family);
+  font-weight: var(--tt-weight);
+  font-style: var(--tt-style);
+  letter-spacing: var(--tt-tracking);
+  font-variation-settings: var(--tt-variation);
+  overflow-wrap: break-word;
+}
+
+.testerLine {
+  font-size: var(--tt-size);
+  line-height: var(--tt-leading);
+  text-wrap: balance;
+}
+
+.testerParagraph {
+  font-size: var(--tt-size);
+  line-height: var(--tt-leading);
+  max-width: 66ch;
+  text-wrap: pretty;
+}
+
+.waterfall {
+  display: grid;
+  gap: var(--lab-space-4);
+}
+
+.waterfall li {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: var(--lab-space-3);
+  align-items: baseline;
+}
+
+.waterfallSize {
+  font-family: var(--lab-mono);
+  font-size: var(--lab-text-xs);
+  opacity: 0.6;
+}
+
+.waterfallText {
+  font-size: var(--wf-size);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 56rem) {
+  .tester {
+    grid-template-columns: 1fr;
+  }
+  .testerControls {
+    position: static;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  }
+}

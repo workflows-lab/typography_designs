@@ -1,0 +1,117 @@
+import type { TypographySystem } from "../../types";
+import { ACCESSIBILITY_BASE, FLUID_RANGE, GREEK_BASE, WRAPPING_BASE, style } from "./shared";
+
+export const T003: TypographySystem = {
+  id: "T003",
+  name: "Warm Table",
+  tagline: "A calligraphic serif italic for hospitality, steadied by a flared Greek-designed sans.",
+  summary:
+    "A hospitality system with handwriting in its headlines and clarity in its menus. Alegreya's italic gives the brand a voice; Commissioner, by Greek designer Kostas Bartsokas, keeps practical text crisp in both scripts.",
+  personality: ["Warm", "Hand-made", "Mediterranean", "Generous"],
+  industries: ["hospitality", "wellness", "culture", "ecommerce"],
+  rationale: [
+    "Alegreya was designed for literature, with a calligraphic rhythm that survives at display sizes. Its italic, set large, feels like a chalkboard written by a careful hand — without resorting to a script font.",
+    "Commissioner is a low-contrast sans whose Flare axis adds slight wedge terminals. At FLAR 60 on labels and small headings it picks up Alegreya's pen-like endings; at 0 in body text it stays neutral.",
+    "Both families were drawn with Greek from the start (Alegreya includes polytonic), so menus and stories read equally well in Greek and English.",
+  ],
+  families: {
+    display: { font: "alegreya" },
+    heading: { font: "alegreya" },
+    body: { font: "commissioner" },
+    ui: { font: "commissioner", axes: ["FLAR"] },
+  },
+  fluid: FLUID_RANGE,
+  styles: {
+    display: style("display", [46, 104], 500, 1.0, -0.01, { style: "italic" }),
+    h1: style("heading", [38, 76], 600, 1.05, -0.01),
+    h2: style("heading", [30, 50], 600, 1.1, -0.005),
+    h3: style("heading", [24, 32], 500, 1.2, 0, { style: "italic" }),
+    h4: style("heading", [20, 24], 700, 1.25),
+    h5: style("ui", [16, 18], 600, 1.35, 0, { variation: "'FLAR' 60" }),
+    h6: style("ui", [13, 14], 600, 1.4, 0.1, { transform: "uppercase", variation: "'FLAR' 60" }),
+    lead: style("heading", [20, 26], 400, 1.45),
+    body: style("body", [16, 18], 400, 1.6),
+    small: style("body", [14, 15], 400, 1.5),
+    caption: style("heading", [14, 15], 400, 1.45, 0, { style: "italic" }),
+    label: style("ui", [12, 13], 600, 1.3, 0.12, { transform: "uppercase", variation: "'FLAR' 60" }),
+    quote: style("heading", [26, 38], 500, 1.25, 0, { style: "italic" }),
+  },
+  emphasis: { strongWeight: 600, italic: false },
+  measure: { body: 62, lead: 50, narrow: 38, heading: 18 },
+  flow: { paragraph: 1, headingBefore: 1.3, headingAfter: 0.4 },
+  guidance: {
+    measure: [
+      "Stories at ~62ch; menus in narrow columns (38–44ch) with the dish name (h4) above a one-line description (small).",
+      "Prices sit on the same line as the dish name, right-aligned, using tabular figures.",
+    ],
+    wrapping: [...WRAPPING_BASE, "Italic display lines love asymmetry: allow them to wrap naturally rather than forcing centred lines."],
+    greek: [
+      ...GREEK_BASE,
+      "Alegreya italic is particularly expressive in Greek — keep display lines short (≤ 6 words) to preserve the rhythm.",
+      "Commissioner has no italic. In Greek and English body text, use weight (600) for emphasis rather than <em>.",
+    ],
+    accessibility: [
+      ...ACCESSIBILITY_BASE,
+      "Italic is reserved for display, quotes, h3 and captions — never for paragraphs of running text.",
+      "Menu descriptions use the small style at ≥ 14px; avoid light text on photography.",
+    ],
+    usage: [
+      "Display italic for the brand promise; roman h1/h2 for practical page titles (Menu, Rooms, Book).",
+      "The uppercase label with Flare is the system's signature for navigation and buttons.",
+    ],
+  },
+  palette: { paper: "#f6efe4", ink: "#2a1d15", muted: "#7a6656", accent: "#b0442b", rule: "#e2d5c3" },
+  composition: {
+    layout: "showcase",
+    content: {
+      en: {
+        brand: "Alati",
+        nav: ["Menu", "Rooms", "Story", "Book a table"],
+        eyebrow: "Taverna & rooms · Naxos",
+        headline: "Slow lunches by the sea.",
+        lead: "Fish from the morning boats, vegetables from our garden in Melanes and wine from the island's old vineyards.",
+        cta: "Book a table",
+        sectionLabel: "Our kitchen",
+        sectionTitle: "Cooked the way the island eats",
+        body: [
+          "Our kitchen follows the island's calendar. In spring we cook wild greens and artichokes; in summer, tomatoes that taste of sun; in autumn, the first olive oil of the year.",
+          "Everything is made in-house, from the bread to the spoon sweets served with coffee. Tables on the terrace are kept for walk-ins every day until one o'clock.",
+        ],
+        quote: "The menu changes when the sea does.",
+        quoteSource: "Manolis, chef and fisherman's son",
+        itemsTitle: "Today's table",
+        items: [
+          { meta: "€14", title: "Grilled octopus", text: "Santorini fava, capers, red onion." },
+          { meta: "€11", title: "Garden briam", text: "Courgette, aubergine and tomato, baked slowly in olive oil." },
+          { meta: "€9", title: "Arseniko cheese", text: "Aged Naxian cheese with thyme honey." },
+        ],
+        caption: "Lunch on the terrace, Agios Prokopios.",
+        footer: "Alati · Agios Prokopios, Naxos",
+      },
+      el: {
+        brand: "Αλάτι",
+        nav: ["Μενού", "Δωμάτια", "Ιστορία", "Κράτηση"],
+        eyebrow: "Ταβέρνα & δωμάτια · Νάξος",
+        headline: "Αργά μεσημεριανά δίπλα στη θάλασσα.",
+        lead: "Ψάρια από τα πρωινά καΐκια, λαχανικά από τον κήπο μας στις Μέλανες και κρασί από τους παλιούς αμπελώνες του νησιού.",
+        cta: "Κλείστε τραπέζι",
+        sectionLabel: "Η κουζίνα μας",
+        sectionTitle: "Μαγειρεμένα όπως τρώει το νησί",
+        body: [
+          "Η κουζίνα μας ακολουθεί το ημερολόγιο του νησιού. Την άνοιξη μαγειρεύουμε άγρια χόρτα και αγκινάρες, το καλοκαίρι ντομάτες που μυρίζουν ήλιο, το φθινόπωρο το πρώτο λάδι της χρονιάς.",
+          "Όλα φτιάχνονται από εμάς, από το ψωμί μέχρι τα γλυκά του κουταλιού που σερβίρουμε με τον καφέ. Τα τραπέζια της βεράντας κρατιούνται για όσους έρχονται χωρίς κράτηση, κάθε μέρα έως τη μία.",
+        ],
+        quote: "Το μενού αλλάζει όταν αλλάζει η θάλασσα.",
+        quoteSource: "Μανώλης, σεφ και γιος ψαρά",
+        itemsTitle: "Το σημερινό τραπέζι",
+        items: [
+          { meta: "14 €", title: "Χταπόδι στη σχάρα", text: "Φάβα Σαντορίνης, κάπαρη, κόκκινο κρεμμύδι." },
+          { meta: "11 €", title: "Μπριάμ του κήπου", text: "Κολοκυθάκια, μελιτζάνες και ντομάτα, ψημένα αργά σε ελαιόλαδο." },
+          { meta: "9 €", title: "Αρσενικό Νάξου", text: "Παλαιωμένο ναξιώτικο τυρί με θυμαρίσιο μέλι." },
+        ],
+        caption: "Μεσημεριανό στη βεράντα, Άγιος Προκόπιος.",
+        footer: "Αλάτι · Άγιος Προκόπιος, Νάξος",
+      },
+    },
+  },
+};

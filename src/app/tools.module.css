@@ -1,0 +1,6 @@
+.loading {
+  padding-block: var(--lab-space-8);
+  font-family: var(--lab-mono);
+  font-size: var(--lab-text-xs);
+  color: var(--lab-ink-3);
+}

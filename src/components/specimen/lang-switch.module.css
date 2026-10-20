@@ -1,0 +1,8 @@
+.scope[data-show="en"] [data-lang-variant="el"],
+.scope[data-show="el"] [data-lang-variant="en"] {
+  display: none;
+}
+
+.bar {
+  margin-bottom: var(--lab-space-5);
+}
